@@ -1,0 +1,37 @@
+/*Cole todo o conteúdo que estava dentro da tag <style>. Se ficar muito grande, divida em components.css.
+No <head>: <link rel="stylesheet" href="./css/main.css">*/
+
+/* ==========================================================================
+           DOC: ARQUITETURA CSS E DESIGN TOKENS
+           Aqui definimos as variáveis globais (Custom Properties) que controlam 
+           o tema da aplicação. Isso facilita a implementação futura de um Dark Mode.
+           ========================================================================== */
+        :root {
+            --primary: #1e3a8a;       /* Azul escuro (Marca do banco) */
+            --primary-light: #3b82f6; /* Azul claro para hovers e destaques */
+            --primary-dark: #172554;  
+            --secondary: #4f46e5;     /* Indigo para gradientes */
+            --bg-body: #f8fafc;       /* Fundo geral da página (Slate 50) */
+            --bg-surface: #ffffff;    /* Fundo dos cards (Branco puro) */
+            --text-main: #1e293b;     /* Texto principal (Alta legibilidade) */
+            --text-muted: #64748b;    /* Texto secundário (Descrições e dicas) */
+            --border-color: #e2e8f0;  /* Divisórias sutis */
+            
+            /* Cores Semânticas de Gamificação e Status */
+            --accent-yellow: #facc15; 
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            
+            /* Espaçamentos e Sombras (Design moderno com cantos arredondados) */
+            --radius-md: 8px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        /* --- RESET E BASE (Garante renderização igual em todos os navegadores) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.5; padding: 2rem; }
+        .container { max-w: 1100px; margin: 0 auto; }
+        .section-desc { color: var(--text-muted); margin-top: 5px; margin-bottom: 1.5rem; }

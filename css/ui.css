@@ -1,0 +1,63 @@
+
+/* --- ÁREA PRINCIPAL E ANIMAÇÕES DE TRANSIÇÃO --- */
+.main-content { background: var(--bg-surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); padding: 2rem; min-height: 500px; }
+.tab-pane { display: none; animation: fadeIn 0.3s ease-in-out; }
+.tab-pane.active { display: block; } /* Apenas a aba com a classe .active é exibida */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- TROFÉUS E CONQUISTAS --- */
+.badge-trophy { display: inline-flex; align-items: center; gap: 4px; background: linear-gradient(135deg, #fef08a, #f59e0b); color: #78350f; padding: 4px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: bold; box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2); margin-left: auto; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+
+
+
+
+
+
+
+/* --- MODAL (OVERLAY PARA DETALHES DE PLANEJAMENTO) --- */
+.modal-overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); 
+    display: none; justify-content: center; align-items: center; 
+    z-index: 1000; padding: 1rem; opacity: 0; transition: opacity 0.3s ease; 
+}
+.modal-overlay.active { opacity: 1; }
+.modal-content { 
+    background: var(--bg-surface); width: 100%; max-width: 900px; 
+    border-radius: var(--radius-lg); box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+    max-height: 90vh; overflow-y: auto; position: relative;
+    transform: translateY(20px); transition: transform 0.3s ease;
+}
+.modal-overlay.active .modal-content { transform: translateY(0); }
+.modal-header { 
+    background: linear-gradient(to right, #1e293b, #334155); color: white; 
+    padding: 2rem; position: relative; border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.modal-close-btn { 
+    position: absolute; top: 1.5rem; right: 1.5rem; 
+    background: rgba(255, 255, 255, 0.1); border: none; color: white; 
+    width: 32px; height: 32px; border-radius: 50%; cursor: pointer; 
+    display: flex; align-items: center; justify-content: center; transition: background 0.2s;
+}
+.modal-close-btn:hover { background: rgba(255, 255, 255, 0.2); }
+.modal-body { padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.modal-secao-titulo { font-size: 1.1rem; font-weight: bold; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+
+.dia-item { display: flex; align-items: center; padding: 1rem; border-bottom: 1px solid var(--border-color); }
+.dia-nome { width: 80px; font-weight: bold; font-size: 0.9rem; color: var(--text-muted); }
+.dia-materia { flex: 1; font-weight: 500; font-size: 0.95rem; }
+
+
+/* --- TOAST (SISTEMA DE AVISOS FLUTUANTES) --- */
+#toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+.toast { background: var(--bg-surface); border-left: 4px solid var(--success); padding: 1rem 1.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); animation: slideIn 0.3s ease forwards; display: flex; align-items: center; gap: 10px; }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes fadeOut { to { opacity: 0; } }
+
+/* --- RESPONSIVIDADE (MOBILE) --- */
+@media (max-width: 768px) {
+    .app-header { flex-direction: column; align-items: stretch; gap: 1rem; }
+    .analytics-grid, .swot-matrix, .backup-grid, .modal-body { grid-template-columns: 1fr; }
+    .external-box { flex-direction: column; text-align: center; gap: 1rem; }
+}
