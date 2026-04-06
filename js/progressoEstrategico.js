@@ -2,7 +2,7 @@
          * Renderiza a Escada de TI Gamificada.
          * Cruza dbEscada (textos base) com estadoApp.escada (status: bloqueado/ativo/concluido).
          */
-      /*  function renderEscada() {
+        function renderEscada() {
             const container = document.getElementById('container-escada');
             if(!container) return;
             container.innerHTML = '';
@@ -44,32 +44,16 @@
             // Calcula e preenche a barra de progresso CSS (width)
             document.getElementById('barra-progresso-escada').style.width = `${(concluidos / dbEscada.length) * 100}%`;
             lucide.createIcons();
-        }*/   
+       
    
    
    
    
    
    
-   
-   
-   
-   
-   // 1. BANCO DE DADOS LOCAL: As Fases de Estudo
-        // Uma lista (Array) contendo objetos, onde cada objeto representa uma fase.
-        const studyPhases = [
-         //   { id: 1, title: "F1: Alfabetização e Setup", period: "Meses 1-3", focus: "Lógica e Preparação do Ambiente. Entender a lógica por trás da computação.", routine: "Seg/Qua/Sex: TI (Lógica) | Ter/Qui: Português.", goals: ["Instalar e configurar VS Code e Git/GitHub.", "Resolver 150 questões de Lógica (Teste de Mesa).", "Iniciar Deck de Anki com classes de palavras.", "Checkpoint: Acertar >70% em lógica."] },
-           // { id: 2, title: "F2: Estruturas e Persistência", period: "Meses 4-6", focus: "Onde os dados moram. Dominar a organização da informação.", routine: "Seg/Qua/Sex: TI (Dados/SQL) | Ter/Qui: Português (Interpretação).", goals: ["Criar DB local e realizar CRUD.", "Dominar 1ª, 2ª e 3ª Formas Normais.", "Mapear Pilhas/Filas com exemplos bancários.", "Alimentar Anki com regras de Crase e Pontuação."] },
-           // { id: 3, title: "F3: Codificação Core e Finanças", period: "Meses 7-9", focus: "Java e Juros. Codificação orientada à banca e valor do dinheiro.", routine: "Seg/Qua/Sex: TI (Java) | Ter/Qui: Mat. Financeira.", goals: ["Implementar sistema Conta Corrente em Java (POO).", "Resolver 100 questões de Juros Compostos.", "Dominar SQL Queries com 3+ JOINS.", "Checkpoint: Simulado Java Core + SQL."] },
-          //  { id: 4, title: "F4: Inteligência e Finanças II", period: "Meses 10-12", focus: "Python e Amortização. Ciência de dados aplicada.", routine: "Seg/Qua/Sex: TI (Python) | Ter/Qui: Mat. Financeira.", goals: ["Criar script Python lendo CSV bancário (Pandas).", "Construir planilhas PRICE e SAC manualmente.", "Anki com Estatística Descritiva.", "Vocabulário técnico em Inglês."] },
-          //  { id: 5, title: "F5: Engenharia e Nuvem", period: "Meses 13-15", focus: "Arquitetura Moderna e Probabilidade. Escalabilidade de sistemas.", routine: "Seg/Qua/Sex: TI (Cloud/Arquitetura) | Ter/Qui: Probabilidade e Estatística.", goals: ["Desenhar diagrama de Microsserviços para PIX.", "Resolver 80 questões de Probabilidade Condicional.", "Diferenciar IaaS, PaaS, SaaS.", "Estudo de APIs REST (Verbos/Status Codes)."] },
-           // { id: 6, title: "F6: Governança e Ética", period: "Meses 16-18", focus: "Compliance e Gestão. Normas éticas e conformidade.", routine: "Seg/Qua/Sex: TI (Agilidade/Gestão) | Ter/Qui: Ética e Compliance.", goals: ["Fichar LGPD focando em sanções e bases legais.", "Memorizar ritos do Scrum e Kanban.", "Resolver 100 questões sobre Lavagem de Dinheiro.", "Checkpoint: Simulado Governança (ITIL/COBIT)."] },
-          //  { id: 7, title: "F7: Estudo Reverso e Redação", period: "Meses 19-21", focus: "Velocidade e Escrita. Correção de lacunas residuais.", routine: "Seg/Qua/Sex: TI (Questões) | Ter: Básicas | Qui: Redação.", goals: ["1 redação/semana sobre tecnologia/bancos.", "50 questões/dia via Estudo Reverso.", "Revisar Deck Anki Master (erros).", "Baixar tempo médio por questão para 2 min."] },
-          //  { id: 8, title: "F8: Simulação Total e Véspera", period: "Meses 22-24", focus: "Ajuste Fino e Psicológico. Memorização de curto prazo.", routine: "Seg-Qui: Revisão Ativa | Sex: Simulado Geral.", goals: ["10 simulados completos com gabarito.", "Revisar Leitura Suja (Prazos/Multas).", "Média de acertos em TI > 85%.", "Simular dia da prova (tempo/alimentação)."] }
-        ];
-
+  
         // 2. BANCO DE DADOS LOCAL: O Edital (Checklist)
-     /*   const checklistData = [
+        const checklistData = [
             // TI
             { id: 'c1', area: 'ti', priority: 'quente', title: 'Bancos de Dados - SQL: Select, Insert, Update, Delete, Joins, Group By, Subqueries' },
             { id: 'c2', area: 'ti', priority: 'quente', title: 'Bancos de Dados: Modelagem Relacional e Normalização (1FN, 2FN, 3FN)' },
@@ -82,6 +66,7 @@
             { id: 'c31', area: 'ti', priority: 'quente', title: 'Comportamentos Digitais: Mindset de Crescimento e OKRs (Objectives and Key Results)' },
             { id: 'c32', area: 'ti', priority: 'quente', title: 'Agilidade: Kanban e Fluxo de Valor)' },
             { id: 'c33', area: 'ti', priority: 'quente', title: 'Segurança: Segurança Cibernética (Resolução CMN 4893)' },
+            
             { id: 'c12', area: 'ti', priority: 'morno', title: 'Engenharia de Software: Engenharia de Requisitos (Funcionais vs Não Funcionais)' },
             { id: 'c35', area: 'ti', priority: 'morno', title: 'Engenharia de Software: UML (Diagramas de Classe e Caso de Uso).' },
             { id: 'c36', area: 'ti', priority: 'morno', title: 'Desenvolvimento Web: JSON, XML e Sistemas Distribuídos' },
@@ -92,10 +77,11 @@
             { id: 'c15', area: 'ti', priority: 'morno', title: 'Sistemas Operacionais: Processos (Comunicação/Escalonamento) e Gerência de Memória.' },
             { id: 'c38', area: 'ti', priority: 'morno', title: 'Sistemas Operacionais: Windows 10 e Ambiente Linux (SUSE).' },
             { id: 'c16', area: 'ti', priority: 'morno', title: 'Governança de TI: ITIL v4 e COBIT 2019 (Visão Geral)' },
-            { id: 'c21', area: 'ti', priority: 'frio', title: 'Linguagens: Cobol, R, Scala, Objective-C, Swift' },
             { id: 'c39', area: 'ti', priority: 'morno', title: 'Linguagens: JavaScript e TypeScript 4.X' },
             { id: 'c40', area: 'ti', priority: 'morno', title: 'Comportamentos Digitais: Design Thinking e Ciência de Dados (Conceitos)' },
             { id: 'c41', area: 'ti', priority: 'morno', title: 'Comportamentos Digitais: Metodologias Ágeis e Lean Manufacturing' },
+            
+            { id: 'c21', area: 'ti', priority: 'frio', title: 'Linguagens: Cobol, R, Scala, Objective-C, Swift' },
             { id: 'c42', area: 'ti', priority: 'frio', title: 'Linguagens/Frameworks: C# 12, .NET, AngularJS, Angular, JSF, JSP, Ajax' },
             { id: 'c43', area: 'ti', priority: 'frio', title: 'Sistemas Operacionais Legados: IBM z/OS' },
             { id: 'c44', area: 'ti', priority: 'frio', title: 'Outros: Portais corporativos (RSS, Portlets), Acessibilidade (e-MAG) e Pontos de Função.' },            
@@ -133,11 +119,13 @@
             
             // Digitais
             { id: 'c27', area: 'digital', priority: 'quente', title: 'Digitais: Mindset Ágil, OKRs, Pensamento Computacional' },
+            
             { id: 'c53', area: 'digital', priority: 'morno', title: 'Digitais: Inteligência Emocional e Resolução de Problemas Complexos.' },
             { id: 'c28', area: 'digital', priority: 'morno', title: 'Digitais: Design Thinking, Ciência de Dados (Conceitos), I.E.' },
+            
             { id: 'c29', area: 'digital', priority: 'frio', title: 'Digitais: Sustentabilidade (ODS), CX' },
             { id: 'c58', area: 'digital', priority: 'frio', title: 'Digitais: Intraempreendedorismo, Liderança e Aprendizagem Contínua' }
-        ];*/
+        ];
 
         // 3. ESTADO DA APLICAÇÃO (A "Memória" da tela atual)
         let state = {
