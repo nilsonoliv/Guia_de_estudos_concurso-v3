@@ -5,282 +5,160 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto Aprovação TI Bancária</title>
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6OdglAknqTrGkTOuerJPZ2w0FlURVWiQcgXIf9L7a4Q&s" type="image/png">
-    <link rel="stylesheet" href="./css/main.css">
+     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/ui.css">
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/nav.css">
     <link rel="stylesheet" href="./css/progressoEstrategico.css">
     
-    <!-- 
-      DOC: Bibliotecas Externas 
-      - Lucide: Utilizada para renderizar ícones SVG leves e modernos.
-      - Chart.js: Utilizada para a renderização do gráfico de evolução na aba de Analytics.
-    -->
+    <!-- DOC: Bibliotecas Externas (Ícones e Gráficos) -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-       <!-- ==========================================================================
-         DOC: LÓGICA DE NEGÓCIO E RENDERIZAÇÃO (JAVASCRIPT)
-         ========================================================================== -->
+
     <script defer src="./js/main.js"  ></script>
     <script defer src="./js/data.js"></script>
     <script defer src="./js/ui.js"></script>
     <script defer src="./js/firebase.js"></script>
     
-
-
 </head>
 <body>
 
     <div class="container">
-        <!-- ==========================================================================
-             DOC: CABEÇALHO PRINCIPAL
-             Contém o Streak (fogo de dias seguidos) e a Contagem Regressiva para a prova.
-             ========================================================================== -->
+        <!-- CABEÇALHO GERAL -->
         <header class="app-header">
             <div class="header-left">
-               <a href="./html/base.html"> <h1><i data-lucide="award" style="color: var(--accent-yellow)"></i> Projeto Aprovação TI Bancária</h1></a>
+                <h1><i data-lucide="award" style="color: var(--accent-yellow)"></i> Projeto Aprovação TI Bancária</h1>
                 <p>Centro de Comando Estratégico | Foco: CEF / Banco do Brasil</p>
             </div>
             <div class="header-actions">
-                <!-- Botão de Streak Gamificado -->
                 <div class="streak-panel" onclick="marcarMetaDiaria()" title="Clique para marcar o estudo de hoje!">
                     <div class="streak-count" id="ui-streak-count">
                         <i data-lucide="flame" id="ui-streak-icon"></i> <span>0</span>
                     </div>
                     <div class="streak-label">Dias Seguidos</div>
                 </div>
-                
-                <!-- Painel de Contagem Regressiva Dinâmica -->
                 <div class="header-stats">
                     <div class="stats-label"><i data-lucide="timer" style="width: 14px; display: inline;"></i> Contagem Regressiva</div>
                     <div class="stats-value" id="ui-countdown">-- dias</div>
-                    <div class="stats-sub">
-                        Início: <input type="date" id="input-data-inicio" class="input-data" onchange="atualizarDataInicio(event)" title="Defina a data de início dos seus estudos">
-                    </div>
+                    <div class="stats-sub">Início: <input type="date" id="input-data-inicio" class="input-data" onchange="atualizarDataInicio(event)"></div>
                 </div>
             </div>
         </header>
 
-        <!-- ==========================================================================
-             DOC: MENU DE NAVEGAÇÃO DE ABAS
-             Controlado via JavaScript pela função configurarTabs().
-             O atributo data-target aponta para o ID da section correspondente.
-             ========================================================================== -->
+        <!-- MENU DE NAVEGAÇÃO ATUALIZADO COM NOVA ABA -->
         <nav class="nav-container">
             <button class="tab-btn active" data-target="tab-fases"><i data-lucide="calendar"></i> Roadmap</button>
             <button class="tab-btn" data-target="tab-escada"><i data-lucide="trending-up"></i> Escada de TI</button>
+            <button class="tab-btn" data-target="tab-progresso"><i data-lucide="target"></i> Progresso Global</button>
             <button class="tab-btn" data-target="tab-checklist"><i data-lucide="check-square"></i> Checklist Quente</button>
-            <button class="tab-btn" data-target="tab-analytics"><i data-lucide="pie-chart"></i> Estratégia & Analytics</button>
-            <button class="tab-btn" data-target="tab-backup"><i data-lucide="cloud"></i> Sincronização</button>
+            <button class="tab-btn" data-target="tab-analytics"><i data-lucide="pie-chart"></i> Analytics</button>
+            <button class="tab-btn" data-target="tab-backup"><i data-lucide="cloud"></i> Sync</button>
         </nav>
 
-        <!-- ==========================================================================
-             DOC: ÁREA DE CONTEÚDO PRINCIPAL (TABS)
-             ========================================================================== -->
         <main class="main-content">
             
-            <!-- ABA 1: ROADMAP DE FASES -->
+            <!-- ABA 1: ROADMAP -->
             <section id="tab-fases" class="tab-pane active">
                 <h2>O Roadmap de 2 Anos</h2>
-                <p class="section-desc">Macro planeamento. Clique em "Ver Planejamento Semanal" ou marque a fase como concluída ao finalizar o ciclo.</p>
-                
-                <!-- Container vazio: O JS renderiza aqui os cards das fases ativas -->
+                <p class="section-desc">Macro planeamento. Marque a fase como concluída ao finalizar o ciclo.</p>
                 <div class="grid-fases" id="container-fases-ativas"></div>
-                
-                <!-- Container para Fases Superadas (oculto se vazio) -->
                 <div id="wrapper-concluidas" style="display:none; margin-top: 3rem; border-top: 1px dashed var(--border-color); padding-top: 1.5rem;">
-                    <h3 style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;">
-                        <i data-lucide="check-circle-2" style="color: var(--success);"></i> Fases Superadas
-                    </h3>
+                    <h3 style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;"><i data-lucide="check-circle-2" style="color: var(--success);"></i> Fases Superadas</h3>
                     <div class="grid-fases" id="container-fases-concluidas" style="margin-top:0;"></div>
                 </div>
             </section>
 
-            <!-- ABA 2: Progresso Estratégico -->
-            <div class="container section-mt">
-
-                 <!-- SEÇÃO 1: VISÃO GERAL E GRÁFICO -->
-                <section class="glass-panel">
-                    <h2 class="section-title">🎯 Progresso Estratégico Gamificado</h2>
-                    <p class="section-desc">
-                        O gráfico abaixo é <strong>totalmente interativo e reage ao seu progresso no Checklist</strong>. Conclua itens para transformar o espaço cinza em conhecimento sólido!
-                    </p>
-                    
-                    <div class="overview-grid">
-                        <!-- Lado Esquerdo: Gráfico -->
-                        <div class="chart-wrapper">
-                            <div class="chart-container">
-                                <canvas id="scoreChart"></canvas>
-                            </div>
-                        </div>
-                        
-                        <!-- Lado Direito: Cartões de Pontuação -->
-                        <div class="score-cards-wrapper">
-                            <div class="score-card card-ti">
-                                <div>
-                                    <h3>💻 Tecnologia da Informação</h3>
-                                    <p style="font-size:0.875rem; margin-top:0.25rem;">O coração da prova. Define a aprovação.</p>
-                                </div>
-                                <div style="text-align: right;">
-                                    <span class="score-val" id="pts-ti">0.0</span>
-                                    <span class="score-lbl">de 30 pts</span>
-                                </div>
-                            </div>
-                            
-                            <div class="score-card card-basico">
-                                <div>
-                                    <h3>📚 Conhecimentos Básicos</h3>
-                                    <p style="font-size:0.875rem; margin-top:0.25rem;">Essenciais para não ser eliminado.</p>
-                                </div>
-                                <div style="text-align: right;">
-                                    <span class="score-val" id="pts-basico">0.0</span>
-                                    <span class="score-lbl">de 25 pts</span>
-                                </div>
-                            </div>
-                            
-                            <div class="score-card card-digital">
-                                <div>
-                                    <h3>🧠 Comportamentos Digitais</h3>
-                                    <p style="font-size:0.875rem; margin-top:0.25rem;">Pontos de frameworks de inovação.</p>
-                                </div>
-                                <div style="text-align: right;">
-                                    <span class="score-val" id="pts-digital">0.0</span>
-                                    <span class="score-lbl">de 5 pts</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                 <!-- Container onde o JavaScript vai injetar os cartões das fases -->
-                <div class="phases-grid" id="phasesGrid"></div>
-                </div>
-                
-                 <!-- Painel oculto que mostra os detalhes quando uma fase é clicada -->
-                <div id="phaseDetailContainer" class="glass-panel phase-detail-panel">
-                    <div class="detail-header">
-                        <h3 id="detailTitle" style="font-size:1.25rem; font-weight:bold;"></h3>
-                        <button id="closeDetail" class="btn-close">✕</button>
-                    </div>
-                    <div class="detail-content">
-                        <div>
-                            <h4 style="font-size:0.75rem; color:#57534e; margin-bottom:0.5rem; text-transform:uppercase;">Foco & Rotina</h4>
-                            <div id="detailFocus" class="detail-box"></div>
-                            <div id="detailRoutine" class="detail-box"></div>
-                        </div>
-                        <div>
-                            <h4 style="font-size:0.75rem; color:#57534e; margin-bottom:0.5rem; text-transform:uppercase;">Metas de Elite</h4>
-                            <ul id="detailGoals" class="detail-box" style="list-style-position: inside;"></ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SEÇÃO 2: CHECKLIST E FILTROS -->
-                <section class="glass-panel">
-                    <h2 class="section-title">🔥 Checklist Exaustivo de Prioridade</h2>
-                    <p class="section-desc">
-                        Utilize os botões abaixo para filtrar os tópicos do edital por "Temperatura". Priorize sempre o que é Quente (Alta incidência em provas da Cesgranrio).
-                    </p>
-                    
-                    <!-- Botões de Filtro -->
-                    <div class="filters-container" id="filterContainer">
-                        <button data-filter="all" class="btn-filter active">Todos</button>
-                        <button data-filter="quente" class="btn-filter">🔴 Quente (Alta)</button>
-                        <button data-filter="morno" class="btn-filter">🟡 Morno (Média)</button>
-                        <button data-filter="frio" class="btn-filter">🔵 Frio (Baixa)</button>
-                        <button data-filter="ti" class="btn-filter">💻 Apenas TI</button>
-                    </div>
-
-                    <!-- Container onde o JavaScript vai injetar a lista de tarefas -->
-                    <div class="checklist-wrapper" id="checklistContainer">
-                        <!-- Itens serão gerados aqui via JS -->
-                    </div>
-                    
-                    <!-- Barra de Progresso do Checklist -->
-                    <div class="progress-section">
-                        <span id="progressText">0 de 0 itens concluídos</span>
-                        <div class="progress-track">
-                            <!-- A largura (width) desta div é alterada via JavaScript -->
-                            <div id="progressBar" class="progress-fill" style="width: 0%"></div>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-
-
-            <!-- <section id="tab-escada" class="tab-pane">
+            <!-- ABA 2: ESCADA DE TI -->
+            <section id="tab-escada" class="tab-pane">
                 <h2>A Escada de Evolução em TI</h2>
                 <p class="section-desc">Conclua um nível para habilitar o próximo. O conhecimento em TI é cumulativo.</p>
-                -->
-                <!-- Barra de Progresso Superior (preenchida via JS baseado no status dos nós) -->
-              <!--  <div class="escada-progresso-geral">
-                    <div class="escada-progresso-barra" id="barra-progresso-escada"></div>
-                </div>
-                -->
-                <!-- Container vazio: O JS injeta o HTML dinâmico com nós e linhas verticais -->
-               <!-- <div id="container-escada"></div>
-            </section>-->
+                <div class="escada-progresso-geral"><div class="escada-progresso-barra" id="barra-progresso-escada"></div></div>
+                <div id="container-escada"></div>
+            </section>
 
-            <!-- ABA 3: CHECKLIST QUENTE -->
+            <!-- ABA 3 (NOVA): PROGRESSO GAMIFICADO (Gráficos integrados do base.html) -->
+            <section id="tab-progresso" class="tab-pane">
+                <h2>🎯 Progresso Estratégico Gamificado</h2>
+                <p class="section-desc">O gráfico abaixo é <strong>totalmente interativo e reage ao seu avanço no Checklist</strong>. Transforme a área cinza em conhecimento sólido!</p>
+                
+                <div class="overview-grid">
+                    <div class="chart-wrapper">
+                        <div class="doughnut-container">
+                            <canvas id="scoreChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="score-cards-wrapper">
+                        <div class="score-card card-ti">
+                            <div>
+                                <h3>💻 Tecnologia da Informação</h3>
+                                <p style="font-size:0.875rem; color: var(--text-muted); margin-top:4px;">O coração da prova. Define a aprovação.</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <span class="score-val" id="pts-ti">0.0</span>
+                                <span class="score-lbl">de 30 pts</span>
+                            </div>
+                        </div>
+                        <div class="score-card card-basico">
+                            <div>
+                                <h3>📚 Conhecimentos Básicos</h3>
+                                <p style="font-size:0.875rem; color: var(--text-muted); margin-top:4px;">Essenciais para não ser eliminado.</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <span class="score-val" id="pts-basico">0.0</span>
+                                <span class="score-lbl">de 25 pts</span>
+                            </div>
+                        </div>
+                        <div class="score-card card-digital">
+                            <div>
+                                <h3>🧠 Comportamentos Digitais</h3>
+                                <p style="font-size:0.875rem; color: var(--text-muted); margin-top:4px;">Pontos de frameworks de inovação.</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <span class="score-val" id="pts-digital">0.0</span>
+                                <span class="score-lbl">de 5 pts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 4: CHECKLIST QUENTE -->
             <section id="tab-checklist" class="tab-pane">
                 <h2>Checklist "Padrão Cesgranrio"</h2>
-                <p class="section-desc">Temas com maior incidência estatística. Feche grupos inteiros para ganhar *Badges*.</p>
+                <p class="section-desc">O seu banco de dados completo do edital. Ao marcar itens aqui, o gráfico em "Progresso Global" evolui.</p>
                 <div class="checklist-legend">
-                    <span class="badge-priority priority-alta">Prioridade Alta</span>
-                    <span class="badge-priority priority-media">Prioridade Média</span>
+                    <span class="badge-priority priority-quente">🔴 Quente</span>
+                    <span class="badge-priority priority-morno">🟡 Morno</span>
+                    <span class="badge-priority priority-frio">🔵 Frio</span>
                 </div>
-                <!-- Container vazio: O JS renderiza aqui os grupos e checkboxes -->
                 <div id="container-checklist"></div>
             </section>
 
-            <!-- ABA 4: ESTRATÉGIA E ANALYTICS -->
+            <!-- ABA 5: ESTRATÉGIA E ANALYTICS -->
             <section id="tab-analytics" class="tab-pane">
-                <!-- Caixa de link para ferramenta externa de questões -->
-                <div class="external-box">
-                    <div>
-                        <h2 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
-                            <i data-lucide="brain-circuit"></i> Prática de Simulados
-                        </h2>
-                        <p style="color: #cbd5e1; font-size: 0.95rem;">Utilize o seu App externo para resolver questões. Registre os resultados mensais aqui.</p>
-                    </div>
-                    <a href="#" class="btn-external" onclick="showToast('O link abriria a sua App de Questões num novo separador.')">
-                        Abrir App Simulados <i data-lucide="external-link" style="width: 18px;"></i>
-                    </a>
-                </div>
-
                 <div class="analytics-grid">
-                    <!-- Gráfico de Evolução (Chart.js) -->
                     <div class="analytics-card">
-                        <div class="analytics-header" style="font-weight: bold; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                            Tracker Longitudinal
-                            <i data-lucide="line-chart" style="color: var(--primary-light)"></i>
+                        <div style="font-weight:bold; font-size:1.1rem; border-bottom:1px solid var(--border-color); padding-bottom:1rem; margin-bottom:1rem; display:flex; justify-content:space-between;">
+                            Tracker Longitudinal <i data-lucide="line-chart" style="color:var(--primary-light)"></i>
                         </div>
-                        <div class="chart-container">
-                            <canvas id="chartEvolucao"></canvas>
-                        </div>
-                        <!-- Formulário para inserir nova nota de simulado -->
-                        <div class="simulado-form">
-                            <input type="text" id="sim-data" class="form-input" placeholder="Mês (Ex: Mês 3)" style="flex: 2;">
-                            <input type="number" id="sim-nota" class="form-input" placeholder="Nota %" min="0" max="100">
-                            <button class="btn-add" onclick="inserirSimulado()"><i data-lucide="plus" style="width:18px;"></i></button>
+                        <div class="chart-container"><canvas id="chartEvolucao"></canvas></div>
+                        <div style="display:flex; gap:10px; margin-top:auto; padding-top:1rem; border-top:1px dashed var(--border-color);">
+                            <input type="text" id="sim-data" placeholder="Ex: Mês 3" style="flex:2; padding:0.5rem; border:1px solid var(--border-color); border-radius:var(--radius-md); outline:none;">
+                            <input type="number" id="sim-nota" placeholder="Nota %" style="flex:1; padding:0.5rem; border:1px solid var(--border-color); border-radius:var(--radius-md); outline:none;">
+                            <button onclick="inserirSimulado()" style="background:var(--primary); color:white; border:none; padding:0.5rem 1rem; border-radius:var(--radius-md); cursor:pointer;"><i data-lucide="plus" style="width:18px;"></i></button>
                         </div>
                     </div>
-
-                    <!-- Matriz SWOT e POTS -->
                     <div class="analytics-card" style="grid-column: 1 / -1;">
-                        <div class="analytics-header" style="font-weight: bold; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                            Inteligência Tática (SWOT & POTS)
-                            <i data-lucide="target" style="color: var(--warning)"></i>
+                        <div style="font-weight:bold; font-size:1.1rem; border-bottom:1px solid var(--border-color); padding-bottom:1rem; margin-bottom:1rem; display:flex; justify-content:space-between;">
+                            Inteligência Tática (SWOT & POTS) <i data-lucide="target" style="color:var(--warning)"></i>
                         </div>
-                        <!-- Container vazio: O JS injeta a interface interativa do SWOT -->
                         <div class="swot-matrix" id="container-swot"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- ABA 5: BACKUP E SINCRONIZAÇÃO -->
+            <!-- ABA 6: BACKUP E SYNC -->
             <section id="tab-backup" class="tab-pane">
                 <h2>Segurança de Dados</h2>
                 <div class="backup-grid">
@@ -289,13 +167,11 @@
                         <h3 style="margin-bottom: 0.5rem;">Nuvem Privada</h3>
                         <div id="cloud-status" style="font-size: 0.9rem; color: var(--danger); margin-bottom: 1.5rem; font-weight: bold;">Offline</div>
                         <button class="btn-backup btn-primary" onclick="if(window.salvarNaNuvem) window.salvarNaNuvem()">Forçar Save na Nuvem</button>
-                        <button class="btn-backup btn-outline" onclick="if(window.carregarDaNuvem) window.carregarDaNuvem()">Sincronizar da Nuvem</button>
                     </div>
                     <div class="backup-card">
                         <i data-lucide="file-json" style="width: 48px; height: 48px; color: var(--success); margin-bottom: 1rem;"></i>
                         <h3 style="margin-bottom: 0.5rem;">Backup Físico Offline</h3>
                         <button class="btn-backup btn-primary" onclick="exportarJSON()">Exportar JSON Local</button>
-                        <!-- Input type="file" escondido, acionado pelo botão abaixo -->
                         <input type="file" id="input-json" accept=".json" style="display:none" onchange="importarJSON(event)">
                         <button class="btn-backup btn-outline" onclick="document.getElementById('input-json').click()">Importar JSON Local</button>
                     </div>
@@ -304,10 +180,7 @@
         </main>
     </div>
 
-    <!-- ==========================================================================
-         DOC: MODAL OVERLAY (Planejamento Detalhado)
-         Inicia escondido (display:none). É exibido quando clicar em "Ver Planejamento".
-         ========================================================================== -->
+    <!-- MODAL DE PLANEJAMENTO DO ROADMAP -->
     <div class="modal-overlay" id="modal-roadmap" onclick="fecharModalFora(event)">
         <div class="modal-content">
             <div class="modal-header">
@@ -317,19 +190,239 @@
                 <p id="modal-fase-objetivo" style="color: #cbd5e1; font-size: 0.9rem;"></p>
             </div>
             <div class="modal-body">
-                <div>
-                    <h3 class="modal-secao-titulo"><i data-lucide="calendar-days" style="color:#2563eb;"></i> Rotina Semanal</h3>
-                    <div id="modal-semana-container"></div>
-                </div>
-                <div>
-                    <h3 class="modal-secao-titulo"><i data-lucide="target" style="color:#e11d48;"></i> Metas do Ciclo</h3>
-                    <ul id="modal-metas-container" style="list-style: none; padding-left: 0;"></ul>
-                </div>
+                <div><h3 class="modal-secao-titulo"><i data-lucide="calendar-days" style="color:#2563eb;"></i> Rotina Semanal</h3><div id="modal-semana-container"></div></div>
+                <div><h3 class="modal-secao-titulo"><i data-lucide="target" style="color:#e11d48;"></i> Metas do Ciclo</h3><ul id="modal-metas-container" style="list-style: none; padding-left: 0;"></ul></div>
             </div>
         </div>
     </div>
 
- 
-   
+    <!-- LÓGICA DO SISTEMA -->
+    <script>
+        // --- 1. STATE MANAGEMENT ---
+        let estadoApp = {
+            dataInicio: '', dataProva: '2028-05-01', fasesConcluidas: [], 
+            streak: { count: 0, lastDate: null }, checklist: [], 
+            escada: [{ id: 1, status: 'ativo' }, { id: 2, status: 'bloqueado' }, { id: 3, status: 'bloqueado' }, { id: 4, status: 'bloqueado' }],
+            simulados: [{ data: "Diagnóstico", nota: 35 }],
+            swot: { forcas: ["Lógica de programação"], fraquezas: ["Java"], taticas: ["Resolver questões"] }
+        };
+
+        // --- 2. BANCOS DE DADOS ---
+        const dbRoadmap = [
+            { id: 1, titulo: "Construção de Base Sólida", meses: "Mês 1 a 6", color: "blue", objetivo: "Construir o alicerce.", semana: [{ dia: "Seg", mat: "Lógica" }, { dia: "Ter", mat: "Java SE" }], metas: ["Estruturas de Controle", "POO Básica"] },
+            { id: 2, titulo: "Consolidação e Web", meses: "Mês 7 a 12", color: "indigo", objetivo: "Expandir para Python e Web.", semana: [{ dia: "Seg", mat: "Python" }, { dia: "Ter", mat: "Dev Web" }], metas: ["Pandas", "APIs REST"] },
+            { id: 3, titulo: "Aprofundamento Prático", meses: "Mês 13 a 18", color: "purple", objetivo: "Estudo reverso.", semana: [{ dia: "Seg", mat: "Arquitetura" }, { dia: "Ter", mat: "Scrum" }], metas: ["MVC", "Culture Agile"] },
+            { id: 4, titulo: "Lapidação e Simulados", meses: "Mês 19 a 24", color: "green", objetivo: "Velocidade de prova.", semana: [{ dia: "Seg", mat: "Governança" }, { dia: "Ter", mat: "Estatística" }], metas: ["ITIL", "Tempo de Prova"] }
+        ];
+
+        const dbEscada = [
+            { id: 1, titulo: "Nível 1: Alicerce", desc: "A base fundamental.", topicos: ["Lógica", "Estrutura Dados"] },
+            { id: 2, titulo: "Nível 2: Coração da Prova", desc: "Onde a banca ataca com código.", topicos: ["Java SE", "SQL", "Python"] },
+            { id: 3, titulo: "Nível 3: O Mundo Web", desc: "Sistemas modernos.", topicos: ["REST", "Microsserviços"] },
+            { id: 4, titulo: "Nível 4: Avançado & Decoreba", desc: "Diferenciais.", topicos: ["Governança", "Cloud"] }
+        ];
+
+        // CHECKLIST INTEGRADO DO ARQUIVO base.html Mapeado por Grupos
+        const dbChecklist = [
+            { areaNome: "TI - Desenvolvimento e Bancos", areaID: 'ti', itens: [
+                { id: 'c1', text: 'Bancos de Dados - SQL: Select, Insert, Update, Delete, Joins', priority: 'quente' },
+                { id: 'c2', text: 'Bancos de Dados: Modelagem Relacional e Normalização', priority: 'quente' },
+                { id: 'c3', text: 'Java SE 21: Sintaxe, Herança, Polimorfismo, Interfaces', priority: 'quente' },
+                { id: 'c4', text: 'Python 3.9: Bibliotecas Pandas e NumPy', priority: 'quente' },
+                { id: 'c13', text: 'Estrutura de Dados: Busca Binária, Ordenação', priority: 'morno' },
+                { id: 'c34', text: 'Estrutura de Dados: Pilha, Fila, Lista Encadeada', priority: 'morno' }
+            ]},
+            { areaNome: "TI - Arquitetura, Nuvem e Gestão", areaID: 'ti', itens: [
+                { id: 'c5', text: 'Agilidade: SCRUM (Papéis, Cerimônias e Artefatos)', priority: 'quente' },
+                { id: 'c6', text: 'Web: Padrões REST, Verbos HTTP e Status Codes', priority: 'quente' },
+                { id: 'c7', text: 'Arquitetura Microsserviço, Nuvem Pública/Privada', priority: 'quente' },
+                { id: 'c30', text: 'Arquitetura de Software: MVC', priority: 'quente' },
+                { id: 'c32', text: 'Agilidade: Kanban e Fluxo de Valor', priority: 'quente' },
+                { id: 'c33', text: 'Segurança Cibernética (CMN 4893)', priority: 'quente' },
+                { id: 'c35', text: 'Eng. de Software: UML (Diagramas de Classe e Caso de Uso)', priority: 'morno' },
+                { id: 'c16', text: 'Governança de TI: ITIL v4 e COBIT 2019', priority: 'morno' },
+                { id: 'c22', text: 'Web Services (UDDI, WSDL, SOAP)', priority: 'frio' },
+                { id: 'c24', text: 'Qualidade de Software: CMMI e MPS-BR', priority: 'frio' }
+            ]},
+            { areaNome: "Conhecimentos Básicos", areaID: 'basico', itens: [
+                { id: 'c8', text: 'Português: Compreensão e Interpretação de Textos', priority: 'quente' },
+                { id: 'c45', text: 'Português: Concordância e Regência', priority: 'quente' },
+                { id: 'c46', text: 'Português: Emprego da Crase', priority: 'quente' },
+                { id: 'c47', text: 'Compliance: Sigilo Bancário e Segurança da Info', priority: 'quente' },
+                { id: 'c11', text: 'Compliance: LGPD e Lavagem de Dinheiro', priority: 'quente' },
+                { id: 'c9', text: 'Mat Financeira: Juros Compostos', priority: 'quente' },
+                { id: 'c10', text: 'Estatística: Probabilidade de Laplace/Condicional', priority: 'quente' },
+                { id: 'c48', text: 'Estatística: Medidas de Tendência Central', priority: 'quente' },
+                { id: 'c18', text: 'Mat Financeira: Equivalência de Capitais', priority: 'morno' },
+                { id: 'c19', text: 'Estatística: Medidas de Dispersão', priority: 'morno' },
+                { id: 'c20', text: 'Inglês: Vocabulário e Interpretação', priority: 'morno' }
+            ]},
+            { areaNome: "Comportamentos Digitais", areaID: 'digital', itens: [
+                { id: 'c27', text: 'Mindset Ágil, OKRs, Pensamento Computacional', priority: 'quente' },
+                { id: 'c53', text: 'Inteligência Emocional e Resolução de Problemas', priority: 'morno' },
+                { id: 'c28', text: 'Design Thinking e Ciência de Dados', priority: 'morno' },
+                { id: 'c29', text: 'Sustentabilidade (ODS)', priority: 'frio' }
+            ]}
+        ];
+
+        let chartEvolucaoInstance = null, progressoChartInstance = null, escadaExpandida = 1;
+
+        // --- 3. MOTORES DE RENDERIZAÇÃO ---
+        function atualizarDataInicio(e) { estadoApp.dataInicio = e.target.value; renderCountdown(); if(window.salvarNaNuvem) window.salvarNaNuvem(); }
+        function renderCountdown() {
+            if (estadoApp.dataInicio) document.getElementById('input-data-inicio').value = estadoApp.dataInicio;
+            const dataAlvo = new Date(estadoApp.dataProva), dataHoje = new Date();
+            dataHoje.setHours(0,0,0,0); dataAlvo.setHours(0,0,0,0);
+            const el = document.getElementById('ui-countdown');
+            if (dataHoje >= dataAlvo) { el.innerText = "Chegou o Dia!"; el.style.color = "var(--accent-yellow)"; } 
+            else { el.innerText = Math.ceil(Math.abs(dataAlvo - dataHoje) / 86400000) + " dias"; }
+        }
+
+        function renderRoadmap() {
+            const contA = document.getElementById('container-fases-ativas'), contC = document.getElementById('container-fases-concluidas');
+            if(!contA) return;
+            const ativas = dbRoadmap.filter(f => !estadoApp.fasesConcluidas.includes(f.id)), concluidas = dbRoadmap.filter(f => estadoApp.fasesConcluidas.includes(f.id));
+            contA.innerHTML = ativas.map(f => `<div class="card-fase" style="border-left-color: var(--${f.color}-500, #3b82f6);"><div style="display:flex; justify-content:space-between;"><div style="font-size:0.75rem; font-weight:bold; opacity:0.6;">${f.meses}</div><button class="btn-icon-acao btn-concluir-fase" onclick="concluirFase(${f.id})"><i data-lucide="check-circle" style="width:20px;"></i></button></div><h3 style="color: var(--primary)">${f.titulo}</h3><button class="btn-abrir-planejamento" onclick="abrirModal(${f.id})">Ver Planejamento <i data-lucide="arrow-right" style="width:16px;"></i></button></div>`).join('');
+            if (concluidas.length > 0) {
+                document.getElementById('wrapper-concluidas').style.display = 'block';
+                contC.innerHTML = concluidas.map(f => `<div class="card-fase" style="border-left-color: var(--border-color); background: var(--bg-body); opacity: 0.8;"><div style="display:flex; justify-content:space-between;"><div style="font-size:0.75rem; font-weight:bold; opacity:0.6;"><strike>${f.meses}</strike></div><button class="btn-icon-acao btn-desfazer-fase" onclick="desfazerFase(${f.id})"><i data-lucide="rotate-ccw" style="width:16px;"></i></button></div><h3 style="color: var(--text-muted)"><strike>${f.titulo}</strike></h3><div style="font-size: 0.85rem; color: var(--success); font-weight: bold; margin-top: 8px; display:flex; align-items:center; gap:4px;"><i data-lucide="check" style="width:14px;"></i> Fase Superada</div></div>`).join('');
+            } else document.getElementById('wrapper-concluidas').style.display = 'none';
+            lucide.createIcons();
+        }
+        function concluirFase(id) { estadoApp.fasesConcluidas.push(id); renderRoadmap(); showToast("Fase superada!"); if(window.salvarNaNuvem) window.salvarNaNuvem(); }
+        function desfazerFase(id) { estadoApp.fasesConcluidas = estadoApp.fasesConcluidas.filter(fid => fid !== id); renderRoadmap(); showToast("Ação desfeita."); if(window.salvarNaNuvem) window.salvarNaNuvem(); }
+        function abrirModal(id) {
+            const f = dbRoadmap.find(x => x.id === id);
+            document.getElementById('modal-fase-titulo').textContent = f.titulo; document.getElementById('modal-fase-badge').textContent = f.meses; document.getElementById('modal-fase-objetivo').textContent = f.objetivo;
+            document.getElementById('modal-semana-container').innerHTML = f.semana.map(d => `<div class="dia-item"><div class="dia-nome">${d.dia}</div><div class="dia-materia">${d.mat}</div></div>`).join('');
+            document.getElementById('modal-metas-container').innerHTML = f.metas.map(m => `<li style="display:flex; gap:10px; margin-bottom:8px; font-size:0.9rem;"><i data-lucide="check-circle-2" style="width:16px; color:#22c55e;"></i> ${m}</li>`).join('');
+            lucide.createIcons({ root: document.getElementById('modal-roadmap') });
+            const m = document.getElementById('modal-roadmap'); m.style.display = 'flex'; setTimeout(() => m.classList.add('active'), 10); document.body.style.overflow = 'hidden';
+        }
+        function fecharModal() { const m = document.getElementById('modal-roadmap'); m.classList.remove('active'); setTimeout(() => { m.style.display = 'none'; document.body.style.overflow = ''; }, 300); }
+        function fecharModalFora(e) { if(e.target.id === 'modal-roadmap') fecharModal(); }
+
+        function renderEscada() {
+            const container = document.getElementById('container-escada'); if(!container) return;
+            let concluidos = 0; container.innerHTML = '';
+            dbEscada.forEach(nivelFix => {
+                const status = (estadoApp.escada.find(n => n.id === nivelFix.id) || {}).status || 'bloqueado';
+                if (status === 'concluido') concluidos++;
+                const isExpandido = escadaExpandida === nivelFix.id ? 'expandido' : '';
+                container.innerHTML += `<div class="timeline-item ${status} ${isExpandido}"><div class="timeline-node">${status==='concluido'?`<i data-lucide="check" style="width:18px;"></i>`:(status==='bloqueado'?`<i data-lucide="lock" style="width:14px;"></i>`:nivelFix.id)}</div><div class="timeline-content" onclick="toggleEscada(${nivelFix.id})"><div class="timeline-header"><div style="display:flex; align-items:center; gap:8px;"><div style="font-weight:bold;">${nivelFix.titulo}</div>${status==='concluido'?'<span class="badge-trophy"><i data-lucide="award" style="width:12px;"></i> Dominado</span>':''}</div><i data-lucide="chevron-${isExpandido?'up':'down'}" style="width:20px;"></i></div><div class="timeline-body"><div style="font-size:0.9rem; margin-bottom:1rem; color:var(--text-muted);">${nivelFix.desc}</div><div style="margin-bottom:1rem; display:flex; gap:6px; flex-wrap:wrap;">${nivelFix.topicos.map(t=>`<span class="tag-ti">${t}</span>`).join('')}</div>${status==='ativo'?`<button class="btn-concluir-nivel" onclick="concluirEscada(event, ${nivelFix.id})"><i data-lucide="award" style="width:16px;"></i> Concluir Nível</button>`:''}</div></div></div>`;
+            });
+            document.getElementById('barra-progresso-escada').style.width = `${(concluidos/dbEscada.length)*100}%`;
+            lucide.createIcons();
+        }
+        function toggleEscada(id) { if((estadoApp.escada.find(n=>n.id===id)||{}).status!=='bloqueado'){ escadaExpandida = escadaExpandida===id?null:id; renderEscada(); } }
+        function concluirEscada(e, id) { e.stopPropagation(); const c = estadoApp.escada.find(n=>n.id===id); if(c) c.status='concluido'; const nx = estadoApp.escada.find(n=>n.id===id+1); if(nx){ nx.status='ativo'; escadaExpandida=nx.id;} renderEscada(); showToast("Nível Dominado!"); if(window.salvarNaNuvem) window.salvarNaNuvem(); }
+
+        function renderChecklist() {
+            const container = document.getElementById('container-checklist'); if(!container) return;
+            container.innerHTML = dbChecklist.map(grupo => {
+                const tConcluidos = grupo.itens.map(i=>i.id).every(id=>estadoApp.checklist.includes(id));
+                return `<div class="checklist-group"><div class="checklist-header"><span>${grupo.areaNome}</span> ${tConcluidos?'<span class="badge-trophy"><i data-lucide="star" style="width:12px;"></i> Bloco Fechado</span>':''}</div><div>${grupo.itens.map(item => `<div class="checklist-item ${estadoApp.checklist.includes(item.id)?'checked':''}" onclick="toggleChecklist('${item.id}')"><div class="checklist-checkbox"><i data-lucide="check" style="width:16px;"></i></div><div class="checklist-text">${item.text}</div><span class="badge-priority priority-${item.priority}">${item.priority}</span></div>`).join('')}</div></div>`;
+            }).join('');
+            lucide.createIcons();
+        }
+        function toggleChecklist(id) {
+            if(estadoApp.checklist.includes(id)) estadoApp.checklist = estadoApp.checklist.filter(i=>i!==id);
+            else { estadoApp.checklist.push(id); showToast("Tópico dominado!"); }
+            renderChecklist(); renderProgressoGamificado(); if(window.salvarNaNuvem) window.salvarNaNuvem();
+        }
+
+        // O NOVO GRÁFICO DOUGHNUT DO BASE.HTML
+        function renderProgressoGamificado() {
+            let tTi=0, tBasico=0, tDigital=0, cTi=0, cBasico=0, cDigital=0;
+            dbChecklist.forEach(g => {
+                g.itens.forEach(i => {
+                    if(g.areaID === 'ti') { tTi++; if(estadoApp.checklist.includes(i.id)) cTi++; }
+                    if(g.areaID === 'basico') { tBasico++; if(estadoApp.checklist.includes(i.id)) cBasico++; }
+                    if(g.areaID === 'digital') { tDigital++; if(estadoApp.checklist.includes(i.id)) cDigital++; }
+                });
+            });
+            const ptsTi = tTi ? (cTi/tTi)*30 : 0; const ptsBasico = tBasico ? (cBasico/tBasico)*25 : 0; const ptsDigital = tDigital ? (cDigital/tDigital)*5 : 0;
+            document.getElementById('pts-ti').textContent = ptsTi.toFixed(1); document.getElementById('pts-basico').textContent = ptsBasico.toFixed(1); document.getElementById('pts-digital').textContent = ptsDigital.toFixed(1);
+            
+            const ctx = document.getElementById('scoreChart'); if(!ctx) return;
+            const dataArr = [ptsTi, ptsBasico, ptsDigital, 60 - (ptsTi+ptsBasico+ptsDigital)];
+            if(progressoChartInstance) { progressoChartInstance.data.datasets[0].data = dataArr; progressoChartInstance.update(); }
+            else {
+                progressoChartInstance = new Chart(ctx, {
+                    type: 'doughnut', data: { labels: ['TI (Dominado)', 'Básicos (Dominado)', 'Digitais (Dominado)', 'Pontos Pendentes'], datasets: [{ data: dataArr, backgroundColor: ['#e11d48', '#57534e', '#d97706', '#e2e8f0'], borderWidth: 0, hoverOffset: 4 }] },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function(c) { return c.label + ': ' + c.raw.toFixed(1) + ' pts'; } } } }, cutout: '75%', animation: { animateScale: true, animateRotate: true } }
+                });
+            }
+        }
+
+        function renderStreak() {
+            document.getElementById('ui-streak-count').querySelector('span').innerText = estadoApp.streak.count;
+            const icon = document.getElementById('ui-streak-icon');
+            if(estadoApp.streak.count > 0) { icon.classList.add('streak-active'); icon.style.color = '#f97316'; } else { icon.classList.remove('streak-active'); icon.style.color = 'currentColor'; }
+        }
+        function marcarMetaDiaria() {
+            const hj = new Date().toDateString(); if(estadoApp.streak.lastDate === hj) { showToast("Fogo já alimentado hoje!", false); return; }
+            const ont = new Date(); ont.setDate(ont.getDate() - 1);
+            if(estadoApp.streak.lastDate === ont.toDateString()) estadoApp.streak.count++; else estadoApp.streak.count = 1;
+            estadoApp.streak.lastDate = hj; renderStreak(); showToast("🔥 Disciplina blindada!"); if(window.salvarNaNuvem) window.salvarNaNuvem();
+        }
+
+        function renderCharts() {
+            const ctx = document.getElementById('chartEvolucao'); if(!ctx) return;
+            const labels = estadoApp.simulados.map(s => s.data), data = estadoApp.simulados.map(s => s.nota);
+            if(chartEvolucaoInstance) chartEvolucaoInstance.destroy();
+            chartEvolucaoInstance = new Chart(ctx, { type: 'line', data: { labels: labels, datasets: [{ label: 'Evolução %', data: data, borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.1)', fill: true, tension: 0.3 }, { label: 'Corte (85%)', data: Array(labels.length).fill(85), borderColor: '#ef4444', borderDash: [5,5], fill: false }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 0, max: 100 } } } });
+        }
+        function inserirSimulado() { const r = document.getElementById('sim-data').value, n = parseFloat(document.getElementById('sim-nota').value); if(r && !isNaN(n)) { estadoApp.simulados.push({data:r,nota:n}); document.getElementById('sim-data').value=''; document.getElementById('sim-nota').value=''; renderCharts(); showToast("📈 Registado!"); if(window.salvarNaNuvem) window.salvarNaNuvem(); } }
+        
+        function renderSwot() {
+            const container = document.getElementById('container-swot'); if(!container) return;
+            const rL = (t, a) => `<ul class="swot-list">${a.map((i, idx) => `<li class="swot-item-row"><span class="swot-item-text">${i}</span><button class="swot-btn-del" onclick="removerSwot('${t}', ${idx})"><i data-lucide="x" style="width:14px;"></i></button></li>`).join('')}</ul><div class="swot-input-group"><input type="text" id="input-swot-${t}" class="swot-input" placeholder="Adicionar..." onkeypress="if(event.key==='Enter') adicionarSwot('${t}')"><button class="swot-btn-add" onclick="adicionarSwot('${t}')"><i data-lucide="plus" style="width:16px;"></i></button></div>`;
+            container.innerHTML = `<div class="swot-quadrant swot-s"><div class="swot-title"><i data-lucide="trending-up" style="color:#16a34a;"></i> Forças</div>${rL('forcas', estadoApp.swot.forcas)}</div><div class="swot-quadrant swot-w"><div class="swot-title"><i data-lucide="trending-down" style="color:#dc2626;"></i> Fraquezas</div>${rL('fraquezas', estadoApp.swot.fraquezas)}</div><div class="swot-quadrant swot-o" style="grid-column: 1 / -1;"><div class="swot-title"><i data-lucide="target" style="color:#2563eb;"></i> Táticas (POTS)</div>${rL('taticas', estadoApp.swot.taticas)}</div>`;
+            lucide.createIcons();
+        }
+        function adicionarSwot(t) { const v = document.getElementById(`input-swot-${t}`).value.trim(); if(v) { estadoApp.swot[t].push(v); renderSwot(); if(window.salvarNaNuvem) window.salvarNaNuvem(); } }
+        function removerSwot(t, idx) { estadoApp.swot[t].splice(idx, 1); renderSwot(); if(window.salvarNaNuvem) window.salvarNaNuvem(); }
+
+        function configurarTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.tab-btn, .tab-pane').forEach(el => el.classList.remove('active'));
+                    btn.classList.add('active'); const t = btn.getAttribute('data-target'); document.getElementById(t).classList.add('active');
+                    if(t === 'tab-analytics') setTimeout(renderCharts, 50);
+                    if(t === 'tab-progresso') setTimeout(renderProgressoGamificado, 50); // Redesenha gráfico do Doughnut
+                });
+            });
+        }
+        function showToast(msg, err=false) { let c = document.getElementById('toast-container'); if(!c){ c = document.createElement('div'); c.id = 'toast-container'; document.body.appendChild(c); } const t = document.createElement('div'); t.className = `toast ${err?'error':''}`; t.innerHTML = `<span>${msg}</span>`; c.appendChild(t); setTimeout(() => { t.style.animation = 'fadeOut 0.3s forwards'; setTimeout(() => t.remove(), 300); }, 3000); }
+
+        // --- 4. BACKUP ---
+        function aplicarEstadoApp(d) { estadoApp = { ...estadoApp, ...d, fasesConcluidas: d.fasesConcluidas || [], dataInicio: d.dataInicio || '' }; renderCountdown(); renderRoadmap(); renderEscada(); renderChecklist(); renderProgressoGamificado(); renderStreak(); renderSwot(); if(document.getElementById('tab-analytics').classList.contains('active')) renderCharts(); }
+        function exportarJSON() { const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(estadoApp)); const a = document.createElement('a'); a.setAttribute("href", str); a.setAttribute("download", "plano.json"); a.click(); showToast("Backup local efetuado!"); }
+        function importarJSON(e) { const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = function(ev) { try { aplicarEstadoApp(JSON.parse(ev.target.result)); showToast("Restaurado!"); } catch(err) { showToast("Inválido.", true); } }; r.readAsText(f); e.target.value = ''; }
+        
+        (async () => {
+            try {
+                const { initializeApp } = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js'); const { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js'); const { getFirestore, doc, setDoc, getDoc } = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js');
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null; const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                if(firebaseConfig) {
+                    const app = initializeApp(firebaseConfig); const auth = getAuth(app); const db = getFirestore(app);
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token); else await signInAnonymously(auth);
+                    onAuthStateChanged(auth, async (user) => {
+                        const statusEl = document.getElementById('cloud-status');
+                        if (user) {
+                            statusEl.innerHTML = '<span style="color: var(--success)">● Conectado (Auto-Sync)</span>';
+                            window.salvarNaNuvem = async () => await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'appData', 'state'), estadoApp);
+                            window.carregarDaNuvem = async () => { const snap = await getDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'appData', 'state')); if(snap.exists()) { aplicarEstadoApp(snap.data()); showToast("Nuvem sincronizada."); } };
+                            window.carregarDaNuvem();
+                        } else { statusEl.innerHTML = '<span style="color: var(--danger)">● Offline</span>'; }
+                    });
+                }
+            } catch(e) { console.error("Firebase indisponível.", e); }
+        })();
+
+        // INIT
+        document.addEventListener('DOMContentLoaded', () => { renderCountdown(); renderRoadmap(); renderEscada(); renderChecklist(); renderProgressoGamificado(); renderStreak(); renderSwot(); configurarTabs(); lucide.createIcons(); });
+    </script>
 </body>
 </html>
