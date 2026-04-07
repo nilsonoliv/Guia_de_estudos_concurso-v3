@@ -48,6 +48,37 @@
 
         ];
 
+        //Função oculta os cards que não pertencem à área selecionada da aba "escada de conhecimento"
+        function filtrarEscada(areaID) {
+            const cards = document.querySelectorAll('.lp, .ti, .mt');
+            cards.forEach(card => {
+                if (areaID === 'all') {
+                    card.style.display = 'block';
+                   // card.style.display = 'block'; // Exibe os cards de TI
+                    //card.style.display = 'block'; // Exibe os cards de LP
+                    //card.style.display = 'block'; // Exibe os cards de MT
+                } 
+                else if (areaID === 'ti') {
+                    card.style.display = 'block'; // Exibe os cards de TI
+                    document.querySelectorAll('.lp, .mt').forEach(c => c.style.display = 'none'); // Esconde os cards de LP e MT
+                } 
+                    else if (areaID === 'lp') {
+                    card.style.display = 'block'; // Exibe os cards de LP
+                    document.querySelectorAll('.ti, .mt').forEach(c => c.style.display = 'none'); // Esconde os cards de TI e MT
+                }
+                    else if (areaID === 'mt') { 
+                    card.style.display = 'block'; // Exibe os cards de MT
+                    document.querySelectorAll('.ti, .lp').forEach(c => c.style.display = 'none'); // Esconde os cards de TI e LP
+                }
+                else  {
+                    card.style.display = 'none';
+                }          
+            });
+
+                
+        }
+
+
         // CHECKLIST INTEGRADO DO ARQUIVO base.html Mapeado por Grupos
         const dbChecklist = [
             { areaNome: "TI - Desenvolvimento e Bancos", areaID: 'ti', itens: [
@@ -135,7 +166,8 @@
                 const status = (estadoApp.escada.find(n => n.id === nivelFix.id) || {}).status || 'bloqueado'; // Incrementa o contador de concluídos se o status for 'concluido'
                 if (status === 'concluido') concluidos++;  // Verifica se o nível atual é o expandido para aplicar a classe CSS correspondente
                 const isExpandido = escadaExpandida === nivelFix.id ? 'expandido' : '';  // Renderiza o item da escada com ícones e informações, incluindo a lógica para mostrar o botão de concluir apenas se o nível estiver ativo
-                container.innerHTML += `<div class="timeline-item ${status} ${isExpandido}"><div class="timeline-node">${status==='concluido'?`<i data-lucide="check" style="width:18px;"></i>`:(status==='bloqueado'?`<i data-lucide="lock" style="width:14px;"></i>`:nivelFix.id)}</div><div class="timeline-content" onclick="toggleEscada(${nivelFix.id})"><div class="timeline-header"><div style="display:flex; align-items:center; gap:8px;"><div style="font-weight:bold;">${nivelFix.titulo}</div>${status==='concluido'?'<span class="badge-trophy"><i data-lucide="award" style="width:12px;"></i> Dominado</span>':''}</div><i data-lucide="chevron-${isExpandido?'up':'down'}" style="width:20px;"></i></div><div class="timeline-body"><div style="font-size:0.9rem; margin-bottom:1rem; color:var(--text-muted);">${nivelFix.desc}</div><div style="margin-bottom:1rem; display:flex; gap:6px; flex-wrap:wrap;">${nivelFix.topicos.map(t=>`<span class="tag-ti">${t}</span>`).join('')}</div>${status==='ativo'?`<button class="btn-concluir-nivel" onclick="concluirEscada(event, ${nivelFix.id})"><i data-lucide="award" style="width:16px;"></i> Concluir Nível</button>`:''}</div></div></div>`; // Adiciona o item renderizado ao container da escada
+                container.innerHTML += `<div class="timeline-item ${nivelFix.tipo} ${status} ${isExpandido}">
+                <div class="timeline-node">${status==='concluido'?`<i data-lucide="check" style="width:18px;"></i>`:(status==='bloqueado'?`<i data-lucide="lock" style="width:14px;"></i>`:nivelFix.id)}</div><div class="timeline-content ${nivelFix.tipo}" onclick="toggleEscada(${nivelFix.id})"><div class="timeline-header"><div style="display:flex; align-items:center; gap:8px;"><div style="font-weight:bold;">${nivelFix.titulo}</div>${status==='concluido'?'<span class="badge-trophy"><i data-lucide="award" style="width:12px;"></i> Dominado</span>':''}</div><i data-lucide="chevron-${isExpandido?'up':'down'}" style="width:20px;"></i></div><div class="timeline-body"><div style="font-size:0.9rem; margin-bottom:1rem; color:var(--text-muted);">${nivelFix.desc}</div><div style="margin-bottom:1rem; display:flex; gap:6px; flex-wrap:wrap;">${nivelFix.topicos.map(t=>`<span class="tag-ti">${t}</span>`).join('')}</div>${status==='ativo'?`<button class="btn-concluir-nivel" onclick="concluirEscada(event, ${nivelFix.id})"><i data-lucide="award" style="width:16px;"></i> Concluir Nível</button>`:''}</div></div></div>`; // Adiciona o item renderizado ao container da escada
             }); // Atualiza a barra de progresso com base na proporção de níveis concluídos em relação ao total
             document.getElementById('barra-progresso-escada').style.width = `${(concluidos/dbEscada.length)*100}%`; // Recria os ícones do Lucide para garantir que os novos elementos sejam renderizados corretamente
             lucide.createIcons();  // Exibe uma mensagem de progresso gamificado com base no número de níveis concluídos
