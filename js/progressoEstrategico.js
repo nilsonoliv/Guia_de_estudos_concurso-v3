@@ -64,111 +64,11 @@ A Regra do 70/20/10: Dedique 70% do tempo à prática, 20% à teoria e 10% à re
 Foco Inicial: Como o plano agora tem 8 blocos, tente não avançar para o próximo sem completar um pequeno projeto prático no bloco atual.
 
 Transição Lógica: A separação dos Bancos de Dados (Bloco 3) serve para que você aprenda a estruturar dados antes de tentar programar sistemas complexos no Bloco 5.
-            
+        
 
 
 
-Planejamento Estratégico de Estudos - Foco CAIXA
 
-Este cronograma foi organizado de forma didática e sequencial, partindo dos fundamentos matemáticos e jurídicos até as aplicações mais complexas do mercado financeiro.
-
-🏗️ Bloco 1: Fundamentos Matemáticos e Estatísticos (A Base)
-
-Antes de entrar na matemática financeira aplicada, você precisa dominar as sequências e a organização de dados.
-
-Sequências Numéricas: Leis de formação (geral e recursiva).
-
-Progressão Aritmética (PA): Definição, termo geral e soma (base para Juros Simples).
-
-Progressão Geométrica (PG): Definição, termo geral e soma (base para Juros Compostos).
-
-Estatística Descritiva (Conceitos Gerais): Variáveis (tipos), população, amostra e frequências (absoluta, relativa e acumulada).
-
-Representação Gráfica: Tabelas, linhas, colunas, setores e histogramas.
-
-💰 Bloco 2: Matemática Financeira Essencial
-
-Aqui aplicamos as progressões ao valor do dinheiro no tempo.
-
-Conceitos Gerais: Valor do dinheiro no tempo, VP (Presente), VF (Futuro), juros, taxa e prazo.
-
-Juros Simples: Fórmulas, cálculos e aplicações (Relação com PA).
-
-Desconto Comercial Simples: O "desconto por fora" utilizado no mercado.
-
-Juros Compostos: Fórmulas, capitalização e juros sobre juros (Relação com PG).
-
-Desconto Racional Composto: O "desconto por dentro" tecnicamente correto.
-
-Equivalência de Capitais: Fluxos regulares e irregulares, prazos e taxas de retorno (VP e VF).
-
-📈 Bloco 3: Finanças Avançadas e Amortização
-
-O coração da prova para bancários.
-
-Séries Uniformes: Anuidades e prestações constantes.
-
-Sistemas de Amortização - Teoria: Conceitos de saldo devedor e amortização.
-
-Sistema de Amortização Constante (SAC): Características e cálculos.
-
-Sistema Francês (Tabela PRICE): Prestações constantes e aplicação prática.
-
-📊 Bloco 4: Probabilidade e Análise de Dados
-
-Onde a estatística se torna ferramenta de decisão.
-
-Medidas de Tendência Central: Média (aritmética, geométrica, ponderada), Moda e Mediana (dados brutos e agrupados).
-
-Medidas de Posição: Quartis e Percentis.
-
-Medidas de Dispersão: Amplitude, Variância, Desvio Padrão e Coeficiente de Variação.
-
-Probabilidade Básica: Experimento aleatório, espaço amostral, evento e Probabilidade de Laplace.
-
-Probabilidade Avançada: Teorema do produto, probabilidade condicional, independência e Distribuição Binomial.
-
-⚖️ Bloco 5: Ética, Compliance e Direito Administrativo
-
-Normas que regem a conduta do empregado público.
-
-Ética e Virtudes: Atitudes éticas, respeito e valores. Ética empresarial e profissional.
-
-Gestão da Ética: Ética em empresas públicas vs. privadas e o Código de Ética da CAIXA.
-
-Artigo 37 da CF: Princípios da Administração Pública (LIMPE - Legalidade, Impessoalidade, Moralidade, Publicidade e Eficiência).
-
-Boas Práticas de Governança Corporativa: Transparência e prestação de contas.
-
-Assédio Moral e Sexual: Conceitos e medidas de enfrentamento no ambiente de trabalho.
-
-🛡️ Bloco 6: Segurança, Sigilo e Proteção de Dados
-
-Conhecimentos fundamentais para a era digital bancária.
-
-Sigilo Bancário: Lei Complementar nº 105/2001.
-
-LGPD (Lei Geral de Proteção de Dados): Lei nº 13.709/2018 (Conceitos e direitos do titular).
-
-Segurança da Informação: Fundamentos, conceitos e mecanismos de segurança.
-
-Segurança Cibernética: Resolução CMN nº 4893/2021.
-
-🚔 Bloco 7: Combate a Ilícitos e Responsabilidade Social
-
-Regras rígidas de controle bancário.
-
-Prevenção à Lavagem de Dinheiro: Lei nº 9.613/98, Circular 3.978/2020, Carta Circular 4.001/2020 e Resolução CVM 50/2021.
-
-Legislação Anticorrupção: Lei nº 12.846/2013 e Decreto nº 11.129/2022.
-
-PRASC CAIXA: Política de Responsabilidade Social, Ambiental e Climática.
-
-🌍 Bloco 8: Contexto e Atualidades
-
-Leitura diária e acompanhamento de notícias.
-
-Atualidades do Mercado Financeiro: Fintechs, Open Banking, Real Digital (Drex), COPOM, Inflação e tendências econômicas.
 
 💡 Dicas do Mentor:
 
