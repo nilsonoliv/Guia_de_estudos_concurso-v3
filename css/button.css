@@ -15,6 +15,13 @@ button:hover {
     font-weight: bold;
 }
 
-.timeline-content { 
+.mt { 
+    display: block; 
+}
+
+.lp { 
+    display: block; 
+}
+.ti { 
     display: block; 
 }
