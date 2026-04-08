@@ -297,11 +297,34 @@
             const icon = document.getElementById('ui-streak-icon');
             if(estadoApp.streak.count > 0) { icon.classList.add('streak-active'); icon.style.color = '#f97316'; } else { icon.classList.remove('streak-active'); icon.style.color = 'currentColor'; }
         }
-        function marcarMetaDiaria() {
-            const hj = new Date().toDateString(); if(estadoApp.streak.lastDate === hj) { showToast("Fogo já alimentado hoje!", false); return; }
-            const ont = new Date(); ont.setDate(ont.getDate() - 1);
-            if(estadoApp.streak.lastDate === ont.toDateString()) estadoApp.streak.count++; else estadoApp.streak.count = 1;
-            estadoApp.streak.lastDate = hj; renderStreak(); showToast("🔥 Disciplina blindada!"); if(window.salvarNaNuvem) window.salvarNaNuvem();
+        function marcarMetaDiaria() { 
+           const hj = new Date().toDateString();
+           console.log( "const hj é igual a: " + hj);
+           if(estadoApp.streak.lastDate === hj) { showToast("Fogo já alimentado hoje!", false); return; } 
+           
+            const ont = new Date(); 
+            console.log( "const ont é igual a: " + ont);
+            
+            ont.setDate(ont.getDate() - 1); 
+            console.log( "const ont.setDate é igual a: " + ont.setDate(ont.getDate() - 1));
+            
+            console.log( "estadoApp.streak.count antes de entrar no if é igual a: " + estadoApp.streak.count);
+            if(estadoApp.streak.lastDate === ont.toDateString()) {
+            estadoApp.streak.count++; 
+                console.log( "estadoApp.streak.count depois de entrar no if é igual a: " + estadoApp.streak.count);
+            }
+            else estadoApp.streak.count = 1; 
+            console.log( "estadoApp.streak.count depois do else é igual a: " + estadoApp.streak.count);
+
+           
+            estadoApp.streak.lastDate = hj;         
+            console.log( "estadoApp.streak.lastDate é igual a: " + estadoApp.streak.lastDate);
+
+            renderStreak(); 
+            
+            showToast("🔥 Disciplina blindada!"); 
+            
+            if(window.salvarNaNuvem) window.salvarNaNuvem();  
         }
 
         function renderCharts() {
