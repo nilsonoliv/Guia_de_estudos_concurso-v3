@@ -1,17 +1,16 @@
     // --- 1. STATE MANAGEMENT ---
         let estadoApp = {
-            dataInicio: '', dataProva: '2028-04-07', fasesConcluidas: [], //2028-05-01 
+            dataInicio: '', dataProva: '2028-05-01', fasesConcluidas: [], 
             streak: { count: 0, lastDate: null }, checklist: [], 
-            filtroEscada: 'all',
             escada: [{ id: 1, status: 'ativo', tipo:'ti' }, { id: 2, status: 'bloqueado', tipo:'ti' }, { id: 3, status: 'bloqueado', tipo:'ti' }, { id: 4, status: 'bloqueado', tipo:'ti' }, { id: 5, status: 'bloqueado', tipo:'ti' }, { id: 6, status: 'bloqueado', tipo:'ti' }, { id: 7, status: 'bloqueado', tipo:'ti' }, { id: 8, status: 'bloqueado', tipo:'ti' }, { id: 9, status: 'ativo', tipo:'mt' }, { id: 10, status: 'bloqueado', tipo:'mt' }, { id: 11, status: 'bloqueado', tipo:'mt' }, { id: 12, status: 'bloqueado', tipo:'mt' }, { id: 13, status: 'bloqueado', tipo:'mt' }, { id: 14, status: 'bloqueado', tipo:'mt' }, { id: 15, status: 'bloqueado', tipo:'mt' }, { id: 16, status: 'bloqueado', tipo:'mt' }, { id: 17, status: 'ativo', tipo:'lp' }, { id: 18, status: 'bloqueado', tipo:'lp' }, { id: 19, status: 'bloqueado', tipo:'lp' }, { id: 20, status: 'bloqueado', tipo:'lp' }, { id: 21, status: 'bloqueado', tipo:'lp' }, { id:22, status: 'bloqueado', tipo: 'lp' }], 
             simulados: [{ data: "Diagnóstico", nota: 35 }],
-            swot: { forcas: ["Lógica de programação"], fraquezas: ["Java"], taticas: ["Resolver questões"] },
+            swot: { forcas: ["Lógica de programação"], fraquezas: ["Java"], taticas: ["Resolver questões"] }
         };
 
         // --- 2. BANCOS DE DADOS ---
         const dbRoadmap = [
-            { id: 1, titulo: "F1: Alfabetização e Setup", meses: "Meses 1-3", color: "green", objetivo: "Lógica e Preparação do Ambiente. Entender a lógica por trás da computação.", semana: [{dia: "Seg", mat: "TI (Lógica) + Inglês"},{dia: "Ter", mat: "Português"}, {dia: "Qua", mat: "TI (Lógica)"}, {dia: "Qui", mat: "Português"}, {dia: "Sex", mat: "TI (Lógica)"}], metas: ["Instalar e configurar VS Code e Git/GitHub.", "Resolver 150 questões de Lógica (Teste de Mesa).", "Iniciar Deck de Anki com classes de palavras.", "Checkpoint: Acertar >70% em lógica."] },
-            { id: 2, titulo: "F2: Estruturas e Persistência", meses: "Meses 4-6", color: "indigo", objetivo: "Onde os dados moram. Dominar a organização da informação.", semana: [{dia: "Seg", mat: "TI (Dados/SQL) + Inglê"},{dia: "Ter", mat: "Português"}, {dia: "Qua", mat: "TI (Dados/SQL)"}, {dia: "Qui", mat: "Português"}, {dia: "Sex", mat: "TI (Dados/SQL)"}], metas: ["Criar DB local e realizar CRUD.", "Dominar 1ª, 2ª e 3ª Formas Normais.", "Mapear Pilhas/Filas com exemplos bancários.", "Alimentar Anki com regras de Crase e Pontuação."] },
+            { id: 1, titulo: "F1: Alfabetização e Setup", meses: "Meses 1-3", color: "green", objetivo: "Lógica e Preparação do Ambiente. Entender a lógica por trás da computação.", semana: [{dia: "Seg", mat: "TI (Lógica)"},{dia: "Ter", mat: "Português"}, {dia: "Qua", mat: "TI (Lógica)"}, {dia: "Qui", mat: "Português"}, {dia: "Sex", mat: "TI (Lógica)"}], metas: ["Instalar e configurar VS Code e Git/GitHub.", "Resolver 150 questões de Lógica (Teste de Mesa).", "Iniciar Deck de Anki com classes de palavras.", "Checkpoint: Acertar >70% em lógica."] },
+            { id: 2, titulo: "F2: Estruturas e Persistência", meses: "Meses 4-6", color: "indigo", objetivo: "Onde os dados moram. Dominar a organização da informação.", semana: [{dia: "Seg", mat: "TI (Dados/SQL)"},{dia: "Ter", mat: "Português"}, {dia: "Qua", mat: "TI (Dados/SQL)"}, {dia: "Qui", mat: "Português"}, {dia: "Sex", mat: "TI (Dados/SQL)"}], metas: ["Criar DB local e realizar CRUD.", "Dominar 1ª, 2ª e 3ª Formas Normais.", "Mapear Pilhas/Filas com exemplos bancários.", "Alimentar Anki com regras de Crase e Pontuação."] },
             { id: 3, titulo: "F3: Codificação Core e Finanças", meses: "Meses 7-9", color: "purple", objetivo: "Java e Juros. Codificação orientada à banca e valor do dinheiro.", semana: [{dia: "Seg", mat: "TI (Java)"},{dia: "Ter", mat: "Mat. Financeira"}, {dia: "Qua", mat: "TI (Java)"}, {dia: "Qui", mat: "Mat. Financeira"}, {dia: "Sex", mat: "TI (Dados/SQL)"}], metas: ["Implementar sistema Conta Corrente em Java (POO).", "Resolver 100 questões de Juros Compostos.", "Dominar SQL Queries com 3+ JOINS.", "Checkpoint: Simulado Java Core + SQL."] },
             { id: 4, titulo: "F4: Inteligência e Finanças II", meses: "Meses 10-12", color: "blue", objetivo: "Python e Amortização. Ciência de dados aplicada.", semana: [{dia: "Seg", mat: "TI (Python)"},{dia: "Ter", mat: "Mat. Financeira"}, {dia: "Qua", mat: "TI (Python)"}, {dia: "Qui", mat: "Mat. Financeira"}, {dia: "Sex", mat: "TI (Python)"}], metas: ["Criar script Python lendo CSV bancário (Pandas).", "Construir planilhas PRICE e SAC manualmente.", "Anki com Estatística Descritiva.", "Vocabulário técnico em Inglês."] },
             { id: 5, titulo: "F5: Engenharia e Nuvem", meses: "Meses 13-15", color: "indigo", objetivo: "Arquitetura Moderna e Probabilidade. Escalabilidade de sistemas.", semana: [{dia: "Seg", mat: "TI (Cloud/Arquitetura)"},{dia: "Ter", mat: "Probabilidade e Estatística"}, {dia: "Qua", mat: "TI (Cloud/Arquitetura)"}, {dia: "Qui", mat: "Probabilidade e Estatística"}, {dia: "Sex", mat: "TI (Cloud/Arquitetura)"}], metas: ["Desenhar diagrama de Microsserviços para PIX.", "Resolver 80 questões de Probabilidade Condicional.", "Diferenciar IaaS, PaaS, SaaS.", "Estudo de APIs REST (Verbos/Status Codes)."] },
@@ -40,12 +39,12 @@
             { id: 15, tipo: "mt", titulo: "🚔 Bloco 7: Combate a Ilícitos e Responsabilidade Social", desc: "Regras rígidas de controle bancário.", topicos: ["Prevenção à Lavagem de Dinheiro: Lei nº 9.613/98, Circular 3.978/2020, Carta Circular 4.001/2020 e Resolução CVM 50/2021.", "Legislação Anticorrupção: Lei nº 12.846/2013 e Decreto nº 11.129/2022.", "PRASC CAIXA: Política de Responsabilidade Social, Ambiental e Climática."] },
             { id: 16, tipo: "mt", titulo: "🌍 Bloco 8: Contexto e Atualidades", desc: "Leitura diária e acompanhamento de notícias.", topicos: ["Atualidades do Mercado Financeiro: Fintechs, Open Banking, Real Digital (Drex), COPOM, Inflação e tendências econômicas."] },
             // Escada de conhecimento para Lingua Portuguesa e Inglês
-            { id: 17, tipo: "lp", titulo: "🧠 Fase I — FUNDAMENTOS DA LEITURA E COMPREENSÃO", desc: "Base de tudo. Não avance sem dominar bem.", topicos: ["Compreensão e interpretação de textos", "Tipologia textual (narração, descrição, dissertação)", "Organização textual", "Coesão e coerência", "Significação das palavras", "Inglês - Vocabulário fundamental (palavras mais frequentes)", "Inglês - Estrutura básica de frases (Sujeito + Verbo + Complemento)"] },
-            { id: 18, tipo: "lp", titulo: "🧠 Fase II — ESTRUTURA DA LÍNGUA (GRAMÁTICA ESSENCIAL)", desc: "Agora você entende textos — vamos entender como eles são construídos.", topicos: ["Ortografia oficial", "Novo Acordo Ortográfico", "Acentuação gráfica", "Inglês - Verbos mais comuns (to be, to have, to do)", "Inglês - Leitura guiada de textos simples"] },
-            { id: 19, tipo: "lp", titulo: "🧠 Fase III — COMUNICAÇÃO E ARGUMENTAÇÃO", desc: "Aqui você começa a pensar como a banca.", topicos: ["Sintaxe da oração e do período","Concordância nominal e verbal","Regência nominal e verbal","Colocação do pronome átono", "Pontuação", "Emprego do sinal indicativo de crase", "Argumentação e persuasão", "Comunicação assertiva (clareza, objetividade, concisão)"] },
-            { id: 20, tipo: "lp", titulo: "🧠 Fase IV — REDAÇÃO (CONSTRUÇÃO COMPLETA)", desc: "Aplicação prática de tudo que foi aprendido.", topicos: ["Interpretação avançada (inferência, intenção do autor, implícitos)","Organização de parágrafos", "Introdução, desenvolvimento e conclusão", "Coesão e coerência (nível avançado)", "Argumentação aplicada", "Elaboração de redação", ] },
-            { id: 21, tipo: "lp", titulo: "🧠 Fase V — REDAÇÃO OFICIAL + iNGLÊS", desc: " Redação oficial e foco em inglês.", topicos: ["Correção e reescrita guiada", "Escrita formal", "Manual de Redação da Presidência da República","Leitura técnica (textos de TI e bancários)", "Reconhecimento de cognatos",] },            
-            { id: 22, tipo: "lp", titulo: "🔁 Fase VI — INGLÊS PARA PROVA (FOCO EM LEITURA)", desc: "Não é fluência — é estratégia de prova.", topicos: ["Interpretação de textos em inglês", "Estratégias de scanning (busca de informação)", "Estratégias de skimming (leitura rápida)", "Falsos cognatos"] },            
+            { id: 17, tipo: "lp", titulo: "Nível 1: Fundamentos de Gramática e Vocabulário", desc: "Construir a base para a compreensão e expressão linguística.", topicos: ["Gramática Básica: Classes de palavras, concordância verbal e nominal, regência verbal e nominal.", "Vocabulário Essencial: Palavras de alta frequência em provas bancárias, expressões idiomáticas e falsos cognatos (Inglês).", "Leitura e Interpretação: Estratégias para compreender textos técnicos e literários."] },
+            { id: 18, tipo: "lp", titulo: "Nível 2: Escrita e Compreensão Avançada", desc: "Aprofundar a capacidade de expressão e compreensão textual.", topicos: ["Redação Oficial: Estrutura e características de textos oficiais, cartas, ofícios e relatórios.", "Gramática Avançada: Uso de tempos verbais, voz passiva, crase e pontuação avançada.", "Inglês para Concursos: Interpretação de textos em inglês, vocabulário técnico e estratégias de tradução."] },
+            { id: 19, tipo: "lp", titulo: "Nível 3: Análise Crítica e Produção Textual", desc: "Desenvolver a capacidade de análise crítica e produção textual de alto nível.", topicos: ["Análise Crítica de Textos: Identificação de argumentos, falácias, viés e intenção do autor.", "Produção Textual Avançada: Redação de textos dissertativos-argumentativos, resenhas e artigos.", "Inglês Avançado: Compreensão auditiva, interpretação de gráficos e textos acadêmicos."] },
+            { id: 20, tipo: "lp", titulo: "Nível 4: Estratégias de Resolução e Revisão Final", desc: "Preparar para a prova com foco em estratégias de resolução e revisão.", topicos: ["Resolução de Questões: Estratégias para resolver questões de língua portuguesa e inglês de forma rápida e eficiente.", "Revisão de Regras Gramaticais e Vocabulário: Revisão intensiva dos principais conceitos gramaticais, regras de pontuação e vocabulário essencial.", "Simulados Específicos: Realização de simulados focados em língua portuguesa e inglês para identificar pontos fortes e áreas de melhoria."] },
+            { id: 21, tipo: "lp", titulo: "Nível 5: Domínio Completo e Fluência", desc: "Alcançar um domínio completo da língua para excelência na prova.", topicos: ["Domínio Completo da Gramática: Revisão e aprofundamento de todos os tópicos gramaticais.", "Fluência em Vocabulário e Expressão: Uso avançado de vocabulário, expressões idiomáticas e fluência na escrita e leitura.", "Simulados de Alta Performance: Realização de simulados com foco em alta performance para consolidar o conhecimento e identificar áreas finais de melhoria."] },            
+            { id: 22, tipo: "lp", titulo: "Nível 6: Domínio Completo e Fluência", desc: "Alcançar um domínio completo da língua para excelência na prova.", topicos: ["Domínio Completo da Gramática: Revisão e aprofundamento de todos os tópicos gramaticais.", "Fluência em Vocabulário e Expressão: Uso avançado de vocabulário, expressões idiomáticas e fluência na escrita e leitura.", "Simulados de Alta Performance: Realização de simulados com foco em alta performance para consolidar o conhecimento e identificar áreas finais de melhoria."] },            
 
         ];
 
@@ -74,61 +73,21 @@
                 else  {
                     card.style.display = 'none';
                 }          
-                estadoApp.filtroEscada = areaID; // Salva o filtro escolhido
-             //   renderEscada(); // Manda redesenhar a escada respeitando o filtro
-            });
-
-                
-        }
-
-             function manterEscada() {
-            const cards = document.querySelectorAll('.lp, .ti, .mt');
-            cards.forEach(card => {
-                if (estadoApp.filtroEscada === 'all') {
-                    card.style.display = 'block';
-                   // card.style.display = 'block'; // Exibe os cards de TI
-                    //card.style.display = 'block'; // Exibe os cards de LP
-                    //card.style.display = 'block'; // Exibe os cards de MT
-                } 
-                else if (estadoApp.filtroEscada === 'ti') {
-                    card.style.display = 'block'; // Exibe os cards de TI
-                    document.querySelectorAll('.lp, .mt').forEach(c => c.style.display = 'none'); // Esconde os cards de LP e MT
-                } 
-                    else if (estadoApp.filtroEscada === 'lp') {
-                    card.style.display = 'block'; // Exibe os cards de LP
-                    document.querySelectorAll('.ti, .mt').forEach(c => c.style.display = 'none'); // Esconde os cards de TI e MT
-                }
-                    else if (estadoApp.filtroEscada === 'mt') { 
-                    card.style.display = 'block'; // Exibe os cards de MT
-                    document.querySelectorAll('.ti, .lp').forEach(c => c.style.display = 'none'); // Esconde os cards de TI e LP
-                }
-                else  {
-                    card.style.display = 'none';
-                }          
-                
-             //   renderEscada(); // Manda redesenhar a escada respeitando o filtro
             });
 
                 
         }
 
 
-        // BANCO DE DADOS LOCAL: O Edital (Checklist) Mapeado por Grupos
+        // CHECKLIST INTEGRADO DO ARQUIVO base.html Mapeado por Grupos
         const dbChecklist = [
             { areaNome: "TI - Desenvolvimento e Bancos", areaID: 'ti', itens: [
-                { id: 'c1', text: 'Bancos de Dados - SQL: Select, Insert, Update, Delete, Joins, Group By, Subqueries', priority: 'quente' },
-                { id: 'c2', text: 'Bancos de Dados: Modelagem Relacional e Normalização (1FN, 2FN, 3FN)', priority: 'quente' },
+                { id: 'c1', text: 'Bancos de Dados - SQL: Select, Insert, Update, Delete, Joins', priority: 'quente' },
+                { id: 'c2', text: 'Bancos de Dados: Modelagem Relacional e Normalização', priority: 'quente' },
                 { id: 'c3', text: 'Java SE 21: Sintaxe, Herança, Polimorfismo, Interfaces', priority: 'quente' },
                 { id: 'c4', text: 'Python 3.9: Bibliotecas Pandas e NumPy', priority: 'quente' },
-                { id: 'c12', text: 'Engenharia de Software: Engenharia de Requisitos (Funcionais vs Não Funcionais)', priority: 'morno' },
                 { id: 'c13', text: 'Estrutura de Dados: Busca Binária, Ordenação', priority: 'morno' },
-                { id: 'c34', text: 'Estrutura de Dados: Pilha, Fila, Lista Encadeada', priority: 'morno' },
-                { id: 'c36', text: 'Desenvolvimento Web: JSON, XML e Sistemas Distribuídos', priority: 'morno' },
-                { id: 'c14', text: 'Teste de Software: Teste de Unidade, Integração e Regressão', priority: 'morno' },
-                { id: 'c39', text: 'Linguagens: JavaScript e TypeScript 4.X', priority: 'morno' },
-                { id: 'c24', text: 'Qualidade de Software: CMMI e MPS-BR', priority: 'frio' },
-                { id: 'c21', text: 'Linguagens: Cobol, R, Scala, Objective-C, Swift', priority: 'frio' },
-                { id: 'c42', text: 'Linguagens/Frameworks: C# 12, .NET, AngularJS, Angular, JSF, JSP, Ajax', priority: 'frio' },
+                { id: 'c34', text: 'Estrutura de Dados: Pilha, Fila, Lista Encadeada', priority: 'morno' }
             ]},
             { areaNome: "TI - Arquitetura, Nuvem e Gestão", areaID: 'ti', itens: [
                 { id: 'c5', text: 'Agilidade: SCRUM (Papéis, Cerimônias e Artefatos)', priority: 'quente' },
@@ -139,16 +98,8 @@
                 { id: 'c33', text: 'Segurança Cibernética (CMN 4893)', priority: 'quente' },
                 { id: 'c35', text: 'Eng. de Software: UML (Diagramas de Classe e Caso de Uso)', priority: 'morno' },
                 { id: 'c16', text: 'Governança de TI: ITIL v4 e COBIT 2019', priority: 'morno' },
-                { id: 'c37', text: 'Cloud Computing: IaaS, PaaS, SaaS, Nuvem Pública e Privada', priority: 'morno' },
                 { id: 'c22', text: 'Web Services (UDDI, WSDL, SOAP)', priority: 'frio' },
-                { id: 'c59', text: 'Agilidade: SAFe, Nexus, Management 3.0 e Lean UX', priority: 'frio' },
-            ]},
-            { areaNome: "TI - Informática", areaID: 'ti', itens: [
-                { id: 'c15', text: 'Sistemas Operacionais: Processos (Comunicação/Escalonamento) e Gerência de Memória.', priority: 'morno' },
-                { id: 'c38', text: 'Sistemas Operacionais: Windows 10 e Ambiente Linux (SUSE).', priority: 'morno' },
-                { id: 'c43', text: 'Sistemas Operacionais Legados: IBM z/OS', priority: 'frio' },
-                { id: 'c44', text: 'Outros: Portais corporativos (RSS, Portlets), Acessibilidade (e-MAG) e Pontos de Função.', priority: 'frio' },
-                { id: 'c23', text: 'Arquitetura de Computadores: CPU, Base Binária, Endereçamento e Hierarquia de Memória', priority: 'frio' },
+                { id: 'c24', text: 'Qualidade de Software: CMMI e MPS-BR', priority: 'frio' }
             ]},
             { areaNome: "Conhecimentos Básicos", areaID: 'basico', itens: [
                 { id: 'c8', text: 'Português: Compreensão e Interpretação de Textos', priority: 'quente' },
@@ -161,65 +112,35 @@
                 { id: 'c48', text: 'Estatística: Medidas de Tendência Central', priority: 'quente' },
                 { id: 'c18', text: 'Mat Financeira: Equivalência de Capitais', priority: 'morno' },
                 { id: 'c19', text: 'Estatística: Medidas de Dispersão', priority: 'morno' },
-                { id: 'c17', text: 'Português: Coesão, Coerência e Organização Textual', priority: 'morno' },
-                { id: 'c49', text: 'Português: Pontuação e Colocação Pronominal', priority: 'morno' },
-                { id: 'c50', text: 'Estatística: Probabilidade Básica (Laplace, Eventos, Espaço Amostral)', priority: 'morno' },
-                { id: 'c51', text: 'Compliance: Artigo 37 da Constituição Federal (Princípios da ADM Pública)', priority: 'morno' },
-                { id: 'c52', text: 'Compliance: Legislação Anticorrupção (Lei 12.846/13 e Dec. 11.129/22)', priority: 'morno' },
-                { id: 'c20', text: 'Inglês: Vocabulário e Interpretação', priority: 'morno' },
-                { id: 'c25', text: 'Português: Ortografia oficial, Acentuação e Redação Oficial', priority: 'frio' },
-                { id: 'c54', text: 'Português: Argumentação e Persuasão', priority: 'frio' },
-                { id: 'c55', text: 'Matemática Financeira: Juros Simples, Descontos e Progressões (PA/PG)', priority: 'frio' },
-                { id: 'c56', text: 'Estatística: Distribuição Binomial e Medidas de Posição (Quartis/Percentis)', priority: 'frio' },
-                { id: 'c57', text: 'Compliance: Ética Profissional, Assédio Moral/Sexual e PRASC CAIXA', priority: 'frio' },
-                { id: 'c58', text: 'Compliance: Atualidades do Mercado Financeiro', priority: 'frio' },
-                { id: 'c26', text: 'Mat. Financeira: Juros Simples, Descontos, PA/PG', priority: 'frio' },
-                { id: 'c60', text: 'Digitais: Intraempreendedorismo, Liderança e Aprendizagem Contínua', priority: 'frio' },
+                { id: 'c20', text: 'Inglês: Vocabulário e Interpretação', priority: 'morno' }
             ]},
             { areaNome: "Comportamentos Digitais", areaID: 'digital', itens: [
                 { id: 'c27', text: 'Mindset Ágil, OKRs, Pensamento Computacional', priority: 'quente' },
-                { id: 'c31', text: 'Comportamentos Digitais: Mindset de Crescimento e OKRs (Objectives and Key Results)', priority: 'quente' },
                 { id: 'c53', text: 'Inteligência Emocional e Resolução de Problemas', priority: 'morno' },
-                { id: 'c28', text: 'Design Thinking, Ciência de Dados e I.E.', priority: 'morno' },
-                { id: 'c40', text: 'Comportamentos Digitais: Design Thinking e Ciência de Dados (Conceitos)', priority: 'morno' },
-                { id: 'c41', text: 'Comportamentos Digitais: Metodologias Ágeis e Lean Manufacturing', priority: 'morno' },
-                { id: 'c29', text: 'Sustentabilidade (ODS), CX', priority: 'frio' }
+                { id: 'c28', text: 'Design Thinking e Ciência de Dados', priority: 'morno' },
+                { id: 'c29', text: 'Sustentabilidade (ODS)', priority: 'frio' }
             ]}
         ];
 
         let chartEvolucaoInstance = null, progressoChartInstance = null, escadaExpandida = 1; // Variável para controlar qual nível da escada de conhecimento está expandido
 
         // --- 3. MOTORES DE RENDERIZAÇÃO ---
-        //o valor da data da prova deve ser o resultado da soma entre a data de início e o prazo total do roadmap (24 meses). Para facilitar, o usuário só precisa informar a data de início, e a data da prova é calculada automaticamente.
-        function atualizarDataInicio(e) { estadoApp.dataInicio = e.target.value; renderCountdown(); if(window.salvarNaNuvem) window.salvarNaNuvem(); } // Atualiza a data de início no estado e redesenha a contagem regressiva. Também salva na nuvem se a função estiver disponível.
-        function renderCountdown() { // Renderiza a contagem regressiva para a data da prova. Se a data de início estiver definida, preenche o campo correspondente. Calcula a diferença entre a data atual e a data da prova, exibindo os dias restantes ou uma mensagem se a data já tiver chegado.
-            if (estadoApp.dataInicio) document.getElementById('input-data-inicio').value = estadoApp.dataInicio; // Preenche o campo de data de início com o valor do estado, se estiver definido.
-            const dataAlvo = new Date(estadoApp.dataProva)  //, dataHoje = new Date(); // Zera as horas para comparar apenas as datas (sem considerar o horário). Isso evita que a contagem regressiva mostre "0 dias" no dia da prova, mesmo que ainda faltem horas.   
-            
-            // Cria a data de referência usando a dataEscolhida. Se estiver vazio, usa a data do computador (hoje).
-            const dataReferencia = estadoApp.dataInicio ? new Date(estadoApp.dataInicio) : new Date(); 
-            
-            dataReferencia.setHours(0,0,0,0); 
-            dataAlvo.setHours(0,0,0,0);
-                        
-            //dataHoje.setHours(0,0,0,0); dataAlvo.setHours(0,0,0,0); // Obtém a data atual e a data da prova, e zera as horas para comparar apenas as datas.
-            const el = document.getElementById('ui-countdown'); // Elemento onde a contagem regressiva será exibida.
-            
-            if (dataReferencia >= dataAlvo) { el.innerText = "Chegou o Dia!"; el.style.color = "var(--accent-yellow)"; } 
-            else { el.innerText = Math.ceil(Math.abs(dataAlvo - dataReferencia) / 86400000) + " dias"; 
-                // Agora o cálculo é feito usando a sua dataReferencia!
-            }
-            
-            
-           // if (dataHoje >= dataAlvo) { el.innerText = "Chegou o Dia!"; el.style.color = "var(--accent-yellow)"; }  // Se a data atual for igual ou superior à data da prova, exibe "Chegou o Dia!" e muda a cor para amarelo.
-            //else { el.innerText = Math.ceil(Math.abs(dataAlvo - dataHoje) / 86400000) + " dias"; } // Caso contrário, calcula a diferença em dias entre a data da prova e a data atual, arredondando para cima, e exibe o número de dias restantes.
+        function atualizarDataInicio(e) { estadoApp.dataInicio = e.target.value; renderCountdown(); if(window.salvarNaNuvem) window.salvarNaNuvem(); }
+        function renderCountdown() {
+            if (estadoApp.dataInicio) document.getElementById('input-data-inicio').value = estadoApp.dataInicio;
+            const dataAlvo = new Date(estadoApp.dataProva), dataHoje = new Date();
+            dataHoje.setHours(0,0,0,0); dataAlvo.setHours(0,0,0,0);
+            const el = document.getElementById('ui-countdown');
+            if (dataHoje >= dataAlvo) { el.innerText = "Chegou o Dia!"; el.style.color = "var(--accent-yellow)"; } 
+            else { el.innerText = Math.ceil(Math.abs(dataAlvo - dataHoje) / 86400000) + " dias"; }
         }
 
         function renderRoadmap() {
             const contA = document.getElementById('container-fases-ativas'), contC = document.getElementById('container-fases-concluidas');
             if(!contA) return;
             const ativas = dbRoadmap.filter(f => !estadoApp.fasesConcluidas.includes(f.id)), concluidas = dbRoadmap.filter(f => estadoApp.fasesConcluidas.includes(f.id));
-            contA.innerHTML = ativas.map(f => `<div class="card-fase" style="border-left-color: var(--${f.color}-500, #3b82f6);"><div style="display:flex; justify-content:space-between;"><div style="font-size:0.75rem; font-weight:bold; opacity:0.6;">${f.meses}</div><button class="btn-icon-acao btn-concluir-fase" onclick="concluirFase(${f.id})"><i data-lucide="check-circle" style="width:20px;"></i></button></div><h3 style="color: var(--primary)">${f.titulo}</h3><h2 style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">${f.objetivo}</h2><button class="btn-abrir-planejamento" onclick="abrirModal(${f.id})">Ver Planejamento<i data-lucide="arrow-right" style="width:16px;"></i></button></div>`).join('');            if (concluidas.length > 0) {
+            contA.innerHTML = ativas.map(f => `<div class="card-fase" style="border-left-color: var(--${f.color}-500, #3b82f6);"><div style="display:flex; justify-content:space-between;"><div style="font-size:0.75rem; font-weight:bold; opacity:0.6;">${f.meses}</div><button class="btn-icon-acao btn-concluir-fase" onclick="concluirFase(${f.id})"><i data-lucide="check-circle" style="width:20px;"></i></button></div><h3 style="color: var(--primary)">${f.titulo}</h3><button class="btn-abrir-planejamento" onclick="abrirModal(${f.id})">Ver Planejamento <i data-lucide="arrow-right" style="width:16px;"></i></button></div>`).join('');
+            if (concluidas.length > 0) {
                 document.getElementById('wrapper-concluidas').style.display = 'block';
                 contC.innerHTML = concluidas.map(f => `<div class="card-fase" style="border-left-color: var(--border-color); background: var(--bg-body); opacity: 0.8;"><div style="display:flex; justify-content:space-between;"><div style="font-size:0.75rem; font-weight:bold; opacity:0.6;"><strike>${f.meses}</strike></div><button class="btn-icon-acao btn-desfazer-fase" onclick="desfazerFase(${f.id})"><i data-lucide="rotate-ccw" style="width:16px;"></i></button></div><h3 style="color: var(--text-muted)"><strike>${f.titulo}</strike></h3><div style="font-size: 0.85rem; color: var(--success); font-weight: bold; margin-top: 8px; display:flex; align-items:center; gap:4px;"><i data-lucide="check" style="width:14px;"></i> Fase Superada</div></div>`).join('');
             } else document.getElementById('wrapper-concluidas').style.display = 'none';
@@ -245,8 +166,8 @@
                 const status = (estadoApp.escada.find(n => n.id === nivelFix.id) || {}).status || 'bloqueado'; // Incrementa o contador de concluídos se o status for 'concluido'
                 if (status === 'concluido') concluidos++;  // Verifica se o nível atual é o expandido para aplicar a classe CSS correspondente
                 const isExpandido = escadaExpandida === nivelFix.id ? 'expandido' : '';  // Renderiza o item da escada com ícones e informações, incluindo a lógica para mostrar o botão de concluir apenas se o nível estiver ativo
-                container.innerHTML += `<div class="timeline-item ${nivelFix.tipo} ${status} ${isExpandido}"><div class="timeline-node">${status==='concluido'?`<i data-lucide="check" style="width:18px;"></i>`:(status==='bloqueado'?`<i data-lucide="lock" style="width:14px;"></i>`:nivelFix.id)}</div><div class="timeline-content ${nivelFix.tipo}" onclick="toggleEscada(${nivelFix.id})"><div class="timeline-header"><div style="display:flex; align-items:center; gap:8px;"><div style="font-weight:bold;">${nivelFix.titulo}</div>${status==='concluido'?'<span class="badge-trophy"><i data-lucide="award" style="width:12px;"></i> Dominado</span>':''}</div><i data-lucide="chevron-${isExpandido?'up':'down'}" style="width:20px;"></i></div><div class="timeline-body"><div style="font-size:0.9rem; margin-bottom:1rem; color:var(--text-muted);">${nivelFix.desc}</div><div style="margin-bottom:1rem; display:flex; gap:6px; flex-wrap:wrap;">${nivelFix.topicos.map(t=>`<span class="tag-ti">${t}</span>`).join('')}</div>${status==='ativo'?`<button class="btn-concluir-nivel" onclick="concluirEscada(event, ${nivelFix.id})"><i data-lucide="award" style="width:16px;"></i> Concluir Nível</button>`:''}</div></div></div>`; // Adiciona o item renderizado ao container da escada
-                manterEscada();
+                container.innerHTML += `<div class="timeline-item ${nivelFix.tipo} ${status} ${isExpandido}">
+                <div class="timeline-node">${status==='concluido'?`<i data-lucide="check" style="width:18px;"></i>`:(status==='bloqueado'?`<i data-lucide="lock" style="width:14px;"></i>`:nivelFix.id)}</div><div class="timeline-content ${nivelFix.tipo}" onclick="toggleEscada(${nivelFix.id})"><div class="timeline-header"><div style="display:flex; align-items:center; gap:8px;"><div style="font-weight:bold;">${nivelFix.titulo}</div>${status==='concluido'?'<span class="badge-trophy"><i data-lucide="award" style="width:12px;"></i> Dominado</span>':''}</div><i data-lucide="chevron-${isExpandido?'up':'down'}" style="width:20px;"></i></div><div class="timeline-body"><div style="font-size:0.9rem; margin-bottom:1rem; color:var(--text-muted);">${nivelFix.desc}</div><div style="margin-bottom:1rem; display:flex; gap:6px; flex-wrap:wrap;">${nivelFix.topicos.map(t=>`<span class="tag-ti">${t}</span>`).join('')}</div>${status==='ativo'?`<button class="btn-concluir-nivel" onclick="concluirEscada(event, ${nivelFix.id})"><i data-lucide="award" style="width:16px;"></i> Concluir Nível</button>`:''}</div></div></div>`; // Adiciona o item renderizado ao container da escada
             }); // Atualiza a barra de progresso com base na proporção de níveis concluídos em relação ao total
             document.getElementById('barra-progresso-escada').style.width = `${(concluidos/dbEscada.length)*100}%`; // Recria os ícones do Lucide para garantir que os novos elementos sejam renderizados corretamente
             lucide.createIcons();  // Exibe uma mensagem de progresso gamificado com base no número de níveis concluídos
@@ -359,15 +280,5 @@
         })();
 
         // INIT
-        document.addEventListener('DOMContentLoaded', () => { 
-            renderCountdown(); 
-            renderRoadmap(); 
-            renderEscada(); 
-            renderChecklist(); 
-            renderProgressoGamificado(); 
-            renderStreak(); 
-            renderSwot(); 
-            configurarTabs(); 
-            lucide.createIcons(); 
-        });
+        document.addEventListener('DOMContentLoaded', () => { renderCountdown(); renderRoadmap(); renderEscada(); renderChecklist(); renderProgressoGamificado(); renderStreak(); renderSwot(); configurarTabs(); lucide.createIcons(); });
   

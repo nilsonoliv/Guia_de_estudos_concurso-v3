@@ -1,60 +1,7 @@
-        /**
-         * Renderiza a Escada de TI Gamificada.
-         * Cruza dbEscada (textos base) com estadoApp.escada (status: bloqueado/ativo/concluido).
-         */
-        function renderEscada() {
-            const container = document.getElementById('container-escada');
-            if(!container) return;
-            container.innerHTML = '';
-            let concluidos = 0;
 
-            dbEscada.forEach((nivelFix) => {
-                const stateNode = estadoApp.escada.find(n => n.id === nivelFix.id);
-                const status = stateNode ? stateNode.status : 'bloqueado';
-                if (status === 'concluido') concluidos++;
-                
-                const isExpandido = escadaExpandida === nivelFix.id ? 'expandido' : '';
-                
-                // Define se mostra ícone de check, cadeado ou número do nível na bolinha
-                let nodeContent = status === 'concluido' ? `<i data-lucide="check" style="width:18px;"></i>` : (status === 'bloqueado' ? `<i data-lucide="lock" style="width:14px;"></i>` : nivelFix.id);
-                const tagsHtml = nivelFix.topicos.map(t => `<span class="tag-ti">${t}</span>`).join('');
-
-                let btnHtml = status === 'ativo' ? `<button class="btn-concluir-nivel" onclick="concluirEscada(event, ${nivelFix.id})"><i data-lucide="award" style="width:16px;"></i> Concluir Nível</button>` : '';
-
-                container.innerHTML += `
-                    <div class="timeline-item ${status} ${isExpandido}">
-                        <div class="timeline-node">${nodeContent}</div>
-                        <div class="timeline-content" onclick="toggleEscada(${nivelFix.id})">
-                            <div class="timeline-header">
-                                <div style="display:flex; align-items:center; gap: 8px;">
-                                    <div style="font-size: 1.1rem; font-weight: bold; color: var(--text-main);">${nivelFix.titulo}</div>
-                                    ${status === 'concluido' ? '<span class="badge-trophy"><i data-lucide="award" style="width:12px;"></i> Nível Dominado</span>' : ''}
-                                </div>
-                                <i data-lucide="chevron-${isExpandido ? 'up' : 'down'}" style="color: var(--text-muted); width: 20px;"></i>
-                            </div>
-                            <div class="timeline-body">
-                                <div style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">${nivelFix.desc}</div>
-                                <div style="margin-bottom: 1rem; display:flex; gap:6px; flex-wrap:wrap;">${tagsHtml}</div>
-                                ${btnHtml}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            // Calcula e preenche a barra de progresso CSS (width)
-            document.getElementById('barra-progresso-escada').style.width = `${(concluidos / dbEscada.length) * 100}%`;
-            lucide.createIcons();
        
             /*
-            Bloco 1:
-
-🔘 Bloco 7: 
-
-
-
-
-
-
+  
 
 
 💡 Dicas de Mentoria:
@@ -66,10 +13,10 @@ Foco Inicial: Como o plano agora tem 8 blocos, tente não avançar para o próxi
 Transição Lógica: A separação dos Bancos de Dados (Bloco 3) serve para que você aprenda a estruturar dados antes de tentar programar sistemas complexos no Bloco 5.
         
 
+*/
 
 
-
-
+/*
 💡 Dicas do Mentor:
 
 Ciclo de Revisão: Para cada 3 tópicos avançados, tire um dia para revisar o primeiro bloco.
@@ -78,86 +25,27 @@ Prática em Matemática: Não use calculadora. No dia da prova, seu cérebro é 
 
 Leitura da Lei Seca: Para os tópicos de Compliance, leia o texto da lei original além dos resumos.
             */ 
-   
-   
-   
-   
-   
-  
-        // 2. BANCO DE DADOS LOCAL: O Edital (Checklist)
-        const checklistData = [
-            // TI
-            { id: 'c1', area: 'ti', priority: 'quente', title: 'Bancos de Dados - SQL: Select, Insert, Update, Delete, Joins, Group By, Subqueries' },
-            { id: 'c2', area: 'ti', priority: 'quente', title: 'Bancos de Dados: Modelagem Relacional e Normalização (1FN, 2FN, 3FN)' },
-            { id: 'c3', area: 'ti', priority: 'quente', title: 'Linguagens - Java SE 21: Sintaxe, Herança, Polimorfismo, Interfaces' },
-            { id: 'c4', area: 'ti', priority: 'quente', title: 'Linguagens - Python 3.9: Bibliotecas Pandas e NumPy' },
-            { id: 'c5', area: 'ti', priority: 'quente', title: 'Agilidade: SCRUM (Framework completo: Papéis, Cerimônias e Artefatos)' },
-            { id: 'c6', area: 'ti', priority: 'quente', title: 'Desenvolvimento Web: Padrões REST, Verbos HTTP (GET, POST, etc.) e Status Codes' },
-            { id: 'c7', area: 'ti', priority: 'quente', title: 'Arquitetura Microsserviço, Nuvem Pública/Privada' },
-            { id: 'c30', area: 'ti', priority: 'quente', title: 'Arquitetura de Software: Microsserviços e Arquitetura em Camadas (MVC)' },
-            { id: 'c31', area: 'ti', priority: 'quente', title: 'Comportamentos Digitais: Mindset de Crescimento e OKRs (Objectives and Key Results)' },
-            { id: 'c32', area: 'ti', priority: 'quente', title: 'Agilidade: Kanban e Fluxo de Valor)' },
-            { id: 'c33', area: 'ti', priority: 'quente', title: 'Segurança: Segurança Cibernética (Resolução CMN 4893)' },
-            
-            { id: 'c12', area: 'ti', priority: 'morno', title: 'Engenharia de Software: Engenharia de Requisitos (Funcionais vs Não Funcionais)' },
-            { id: 'c35', area: 'ti', priority: 'morno', title: 'Engenharia de Software: UML (Diagramas de Classe e Caso de Uso).' },
-            { id: 'c36', area: 'ti', priority: 'morno', title: 'Desenvolvimento Web: JSON, XML e Sistemas Distribuídos' },
-            { id: 'c37', area: 'ti', priority: 'morno', title: 'Cloud Computing: IaaS, PaaS, SaaS, Nuvem Pública e Privada' },
-            { id: 'c13', area: 'ti', priority: 'morno', title: 'Estrutura de Dados: Busca Binária, Ordenação (Bubble, Selection, Insertion)' },
-            { id: 'c34', area: 'ti', priority: 'morno', title: 'Estrutura de Dados: Pilha, Fila, Lista Encadeada e Noções de Árvore Binária' },
-            { id: 'c14', area: 'ti', priority: 'morno', title: 'Teste de Software: Teste de Unidade, Integração e Regressão' },
-            { id: 'c15', area: 'ti', priority: 'morno', title: 'Sistemas Operacionais: Processos (Comunicação/Escalonamento) e Gerência de Memória.' },
-            { id: 'c38', area: 'ti', priority: 'morno', title: 'Sistemas Operacionais: Windows 10 e Ambiente Linux (SUSE).' },
-            { id: 'c16', area: 'ti', priority: 'morno', title: 'Governança de TI: ITIL v4 e COBIT 2019 (Visão Geral)' },
-            { id: 'c39', area: 'ti', priority: 'morno', title: 'Linguagens: JavaScript e TypeScript 4.X' },
-            { id: 'c40', area: 'ti', priority: 'morno', title: 'Comportamentos Digitais: Design Thinking e Ciência de Dados (Conceitos)' },
-            { id: 'c41', area: 'ti', priority: 'morno', title: 'Comportamentos Digitais: Metodologias Ágeis e Lean Manufacturing' },
-            
-            { id: 'c21', area: 'ti', priority: 'frio', title: 'Linguagens: Cobol, R, Scala, Objective-C, Swift' },
-            { id: 'c42', area: 'ti', priority: 'frio', title: 'Linguagens/Frameworks: C# 12, .NET, AngularJS, Angular, JSF, JSP, Ajax' },
-            { id: 'c43', area: 'ti', priority: 'frio', title: 'Sistemas Operacionais Legados: IBM z/OS' },
-            { id: 'c44', area: 'ti', priority: 'frio', title: 'Outros: Portais corporativos (RSS, Portlets), Acessibilidade (e-MAG) e Pontos de Função.' },            
-            { id: 'c45', area: 'ti', priority: 'frio', title: 'Agilidade: SAFe, Nexus, Management 3.0 e Lean UX' },
-            { id: 'c22', area: 'ti', priority: 'frio', title: 'Desenvolvimento Web: Quarkus, SOA, Web Services (UDDI, WSDL, SOAP)' },
-            { id: 'c23', area: 'ti', priority: 'frio', title: 'Arquitetura de Computadores: CPU, Base Binária, Endereçamento e Hierarquia de Memória' },
-            { id: 'c24', area: 'ti', priority: 'frio', title: 'Qualidade de Software: CMMI e MPS-BR (Conceitos e Níveis)' },
-            
-            // CONHECIMENTOS BÁSICOS
-            { id: 'c8', area: 'basico', priority: 'quente', title: 'Português: Compreensão e Interpretação de Textos (O foco principal da banca)' },
-            { id: 'c45', area: 'basico', priority: 'quente', title: 'Português: Concordância (Verbal e Nominal) e Regência' },
-            { id: 'c46', area: 'basico', priority: 'quente', title: 'Português: Emprego do sinal indicativo de crase' },
-            { id: 'c47', area: 'basico', priority: 'quente', title: 'Compliance: Sigilo Bancário (LC 105/2001) e Segurança da Informação' },
-            { id: 'c48', area: 'basico', priority: 'quente', title: 'Estatística: Medidas de Tendência Central (Média, Moda e Mediana)' },
-            { id: 'c9', area: 'basico', priority: 'quente', title: 'Matemática Financeira: Juros Compostos (Montante, Taxas, Prazos)' },
-            { id: 'c10', area: 'basico', priority: 'quente', title: 'Estatística: Probabilidade de Laplace/Condicional' },
-            { id: 'c11', area: 'basico', priority: 'quente', title: 'Compliance: LGPD (Lei 13.709/18) e Prevenção à Lavagem de Dinheiro (Lei 9.613/98)' },
+/*
 
-            { id: 'c17', area: 'basico', priority: 'morno', title: 'Português: Coesão, Coerência e Organização Textual' },
-            { id: 'c49', area: 'basico', priority: 'morno', title: 'Português: Pontuação e Colocação Pronominal' },
-            { id: 'c50', area: 'basico', priority: 'morno', title: 'Estatística: Probabilidade Básica (Laplace, Eventos, Espaço Amostral)' },
-            { id: 'c51', area: 'basico', priority: 'morno', title: 'Compliance: Artigo 37 da Constituição Federal (Princípios da ADM Pública)' },
-            { id: 'c52', area: 'basico', priority: 'morno', title: 'Compliance: Legislação Anticorrupção (Lei 12.846/13 e Dec. 11.129/22)' },
-            { id: 'c18', area: 'basico', priority: 'morno', title: 'Mat. Financeira: Equivalência de Capitais, Séries Uniformes' },
-            { id: 'c19', area: 'basico', priority: 'morno', title: 'Estatística: Medidas de Dispersão (Variância e Desvio Padrão)' },
-            { id: 'c20', area: 'basico', priority: 'morno', title: 'Inglês: Vocabulário Fundamental e Gramática Básica para Interpretação' },
-            
-            { id: 'c25', area: 'basico', priority: 'frio', title: 'Português: Ortografia oficial, Acentuação e Redação Oficial' },
-            { id: 'c54', area: 'basico', priority: 'frio', title: 'Português: Argumentação e Persuasão' },
-            { id: 'c55', area: 'basico', priority: 'frio', title: 'Matemática Financeira: Juros Simples, Descontos e Progressões (PA/PG)' },
-            { id: 'c56', area: 'basico', priority: 'frio', title: 'Estatística: Distribuição Binomial e Medidas de Posição (Quartis/Percentis)' },
-            { id: 'c57', area: 'basico', priority: 'frio', title: 'Compliance: Ética Profissional, Assédio Moral/Sexual e PRASC CAIXA' },
-            { id: 'c58', area: 'basico', priority: 'frio', title: 'Compliance: Atualidades do Mercado Financeiro' },
-            { id: 'c26', area: 'basico', priority: 'frio', title: 'Mat. Financeira: Juros Simples, Descontos, PA/PG' },
-            
-            // Digitais
-            { id: 'c27', area: 'digital', priority: 'quente', title: 'Digitais: Mindset Ágil, OKRs, Pensamento Computacional' },
-            
-            { id: 'c53', area: 'digital', priority: 'morno', title: 'Digitais: Inteligência Emocional e Resolução de Problemas Complexos.' },
-            { id: 'c28', area: 'digital', priority: 'morno', title: 'Digitais: Design Thinking, Ciência de Dados (Conceitos), I.E.' },
-            
-            { id: 'c29', area: 'digital', priority: 'frio', title: 'Digitais: Sustentabilidade (ODS), CX' },
-            { id: 'c58', area: 'digital', priority: 'frio', title: 'Digitais: Intraempreendedorismo, Liderança e Aprendizagem Contínua' }
-        ];
+# ⚡ ORDEM RESUMIDA (MAPA RÁPIDO)
+
+1. Interpretação de texto
+2. Tipologia textual
+3. Coesão e coerência
+4. Vocabulário (PT + EN)
+5. Ortografia + Acentuação
+6. Sintaxe completa
+7. Concordância + Regência
+8. Pontuação + Crase
+9. Argumentação
+10. Redação
+11. Inglês para leitura
+12. Questões + simulados
+
+
+*/
+   
+
 
         // 3. ESTADO DA APLICAÇÃO (A "Memória" da tela atual)
         let state = {
