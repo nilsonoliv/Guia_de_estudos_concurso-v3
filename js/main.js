@@ -358,7 +358,30 @@
 
         // --- 4. BACKUP ---
         function aplicarEstadoApp(d) { estadoApp = { ...estadoApp, ...d, fasesConcluidas: d.fasesConcluidas || [], dataInicio: d.dataInicio || '' }; renderCountdown(); renderRoadmap(); renderEscada(); renderChecklist(); renderProgressoGamificado(); renderStreak(); renderSwot(); if(document.getElementById('tab-analytics').classList.contains('active')) renderCharts(); }
-        function exportarJSON() { const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(estadoApp)); const a = document.createElement('a'); a.setAttribute("href", str); a.setAttribute("download", "plano.json"); a.click(); showToast("Backup local efetuado!"); }
+        
+        /*function exportarJSON() { const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(estadoApp)); const a = document.createElement('a'); a.setAttribute("href", str); a.setAttribute("download", "plano.json"); a.click(); showToast("Backup local efetuado!"); }*/
+
+        async function exportarJSON() {
+            try {
+                const handle = await window.showSaveFilePicker({
+                suggestedName: "plano.json",
+                types: [{
+                    description: "Arquivo JSON",
+                    accept: { "application/json": [".json"] }
+                }]
+                });
+
+                const writable = await handle.createWritable();
+                await writable.write(JSON.stringify(estadoApp, null, 2));
+                await writable.close();
+
+                showToast("Backup salvo com sucesso!");
+            } catch (err) {
+                console.log("Usuário cancelou ou erro:", err);
+                showToast("Backup cancelado.", true);
+            }
+        }
+        
         function importarJSON(e) { const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = function(ev) { try { aplicarEstadoApp(JSON.parse(ev.target.result)); showToast("Restaurado!"); } catch(err) { showToast("Inválido.", true); } }; r.readAsText(f); e.target.value = ''; }
         
         (async () => {
