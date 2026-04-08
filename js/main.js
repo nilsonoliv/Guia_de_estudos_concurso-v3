@@ -358,6 +358,18 @@
             } catch(e) { console.error("Firebase indisponível.", e); }
         })();
 
+
+        //Local Storege Backup (Fallback caso Firebase falhe ou não esteja configurado)
+        (() => {
+            try {
+                const backup = localStorage.getItem('planoEstudoBackup');
+                if(backup) aplicarEstadoApp(JSON.parse(backup));
+                window.addEventListener('beforeunload', () => localStorage.setItem('planoEstudoBackup', JSON.stringify(estadoApp)));
+            } catch(e) { console.error("LocalStorage indisponível.", e); }
+        })();
+
+        
+
         // INIT
         document.addEventListener('DOMContentLoaded', () => { 
             renderCountdown(); 
