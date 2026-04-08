@@ -1,5 +1,5 @@
 
-button {
+.button-escada {
     background-color: #3b82f6;
     color: white;
     border: none;
@@ -10,7 +10,7 @@ button {
     font-size: 16px;
     transition: background-color 0.3s ease;
 }
-button:hover {
+.button-escada:hover {
     background-color: #172554;
     font-weight: bold;
 }
@@ -24,4 +24,27 @@ button:hover {
 }
 .ti { 
     display: block; 
+}
+
+.a-analytics {
+    background-color: #f59e0b;
+    color: rgb(250, 247, 243);
+    text-decoration: none;
+    padding: 20px 40px;
+    border-radius: 5px;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+    border: 1px solid #815304;
+    font-weight: bold;
+    /*efeito de transparencia da cor de fundo*/
+    opacity: 0.7;
+    
+}
+.a-analytics:hover {
+    background-color: #815304;
+    font-weight:900;
+    /*efeito de brilho*/
+    box-shadow: 0 0 10px #f59e0b;
+    opacity: 1;
+
 }
