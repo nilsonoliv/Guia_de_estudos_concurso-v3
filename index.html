@@ -73,10 +73,10 @@
             <section id="tab-escada" class="tab-pane">
                 <h2>A Escada de Evolução Pedagógica</h2>
                 <p class="section-desc">Conclua um nível para habilitar o próximo. O conhecimento é cumulativo.</p>
-                <button onclick="filtrarEscada('all')">Todas</button>
-                <button onclick="filtrarEscada('ti')">Tecnologia da Informação</button>
-                <button onclick="filtrarEscada('mt')">Matemática + Legislação</button>
-                <button onclick="filtrarEscada('lp')">Português + Inglês</button>
+                <button class="button-escada" onclick="filtrarEscada('all')">Todas</button>
+                <button class="button-escada" onclick="filtrarEscada('ti')">Tecnologia da Informação</button>
+                <button class="button-escada" onclick="filtrarEscada('mt')">Matemática + Legislação</button>
+                <button class="button-escada" onclick="filtrarEscada('lp')">Português + Inglês</button>
 
                 <div class="escada-progresso-geral"><div class="escada-progresso-barra" id="barra-progresso-escada"></div></div>
                 <div id="container-escada"></div>
@@ -154,12 +154,15 @@
                             <button onclick="inserirSimulado()" style="background:var(--primary); color:white; border:none; padding:0.5rem 1rem; border-radius:var(--radius-md); cursor:pointer;"><i data-lucide="plus" style="width:18px;"></i></button>
                         </div>
                     </div>
-                    <div class="analytics-card" style="grid-column: 1 / -1;">
+                    <div>
+                        <a class="a-analytics" href="./html/simuladoIndex.html">Abrir Simulado</a>
+                    </div>
+                  <!--  <div class="analytics-card" style="grid-column: 1 / -1;"> 
                         <div style="font-weight:bold; font-size:1.1rem; border-bottom:1px solid var(--border-color); padding-bottom:1rem; margin-bottom:1rem; display:flex; justify-content:space-between;">
                             Inteligência Tática (SWOT & POTS) <i data-lucide="target" style="color:var(--warning)"></i>
                         </div>
                         <div class="swot-matrix" id="container-swot"></div>
-                    </div>
+                    </div>-->
                 </div>
             </section>
 
