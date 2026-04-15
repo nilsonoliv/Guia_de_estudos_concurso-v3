@@ -245,7 +245,7 @@
                 const status = (estadoApp.escada.find(n => n.id === nivelFix.id) || {}).status || 'bloqueado'; // Incrementa o contador de concluídos se o status for 'concluido'
                 if (status === 'concluido') concluidos++;  // Verifica se o nível atual é o expandido para aplicar a classe CSS correspondente
                 const isExpandido = escadaExpandida === nivelFix.id ? 'expandido' : '';  // Renderiza o item da escada com ícones e informações, incluindo a lógica para mostrar o botão de concluir apenas se o nível estiver ativo
-                container.innerHTML += `<div class="timeline-item ${nivelFix.tipo} ${status} ${isExpandido}"><div class="timeline-node">${status==='concluido'?`<i data-lucide="check" style="width:18px;"></i>`:(status==='bloqueado'?`<i data-lucide="lock" style="width:14px;"></i>`:nivelFix.id)}</div><div class="timeline-content ${nivelFix.tipo}" onclick="toggleEscada(${nivelFix.id})"><div class="timeline-header"><div style="display:flex; align-items:center; gap:8px;"><div style="font-weight:bold;">${nivelFix.titulo}</div>${status==='concluido'?'<span class="badge-trophy"><i data-lucide="award" style="width:12px;"></i> Dominado</span>':''}</div><i data-lucide="chevron-${isExpandido?'up':'down'}" style="width:20px;"></i></div><div class="timeline-body"><div style="font-size:0.9rem; margin-bottom:1rem; color:var(--text-muted);">${nivelFix.desc}</div><div style="margin-bottom:1rem; display:flex; gap:6px; flex-wrap:wrap;">${nivelFix.topicos.map(t=>`<span class="tag-ti">${t}</span>`).join('')}</div>${status==='ativo'?`<button class="btn-concluir-nivel" onclick="concluirEscada(event, ${nivelFix.id})"><i data-lucide="award" style="width:16px;"></i> Concluir Nível</button>`:''}</div></div></div>`; // Adiciona o item renderizado ao container da escada
+                container.innerHTML += `<div class="timeline-item ${nivelFix.tipo} ${status} ${isExpandido}"><div class="timeline-node">${status==='concluido'?`<i data-lucide="check" style="width:18px;"></i>`:(status==='bloqueado'?`<i data-lucide="lock" style="width:14px;"></i>`:nivelFix.id)}</div><div class="timeline-content ${nivelFix.tipo}" onclick="toggleEscada(${nivelFix.id})"><div class="timeline-header"><div style="display:flex; align-items:center; gap:8px;"><div style="font-size:1.5rem; font-weight:bold;">${nivelFix.titulo}</div>${status==='concluido'?'<span class="badge-trophy"><i data-lucide="award" style="width:12px;"></i> Dominado</span>':''}</div><i data-lucide="chevron-${isExpandido?'up':'down'}" style="width:20px;"></i></div><div class="timeline-body"><div style="font-size:1.2rem; margin-bottom:1rem; color:var(--text-muted);">${nivelFix.desc}</div><div style="margin-bottom:1rem; display:flex; gap:6px; flex-wrap:wrap;">${nivelFix.topicos.map(t=>`<span class="tag-ti">${t}</span>`).join('')}</div>${status==='ativo'?`<button class="btn-concluir-nivel" onclick="concluirEscada(event, ${nivelFix.id})"><i data-lucide="award" style="width:16px;"></i> Concluir Nível</button>`:''}</div></div></div>`; // Adiciona o item renderizado ao container da escada
                 manterEscada();
             }); // Atualiza a barra de progresso com base na proporção de níveis concluídos em relação ao total
             document.getElementById('barra-progresso-escada').style.width = `${(concluidos/dbEscada.length)*100}%`; // Recria os ícones do Lucide para garantir que os novos elementos sejam renderizados corretamente
@@ -361,36 +361,67 @@
         
         /*function exportarJSON() { const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(estadoApp)); const a = document.createElement('a'); a.setAttribute("href", str); a.setAttribute("download", "plano.json"); a.click(); showToast("Backup local efetuado!"); }*/
 
-        async function exportarJSON() {
-            try {
-                const handle = await window.showSaveFilePicker({
-                suggestedName: "plano.json",
-                types: [{
-                    description: "Arquivo JSON",
-                    accept: { "application/json": [".json"] }
-                }]
-                });
+async function exportarJSON() {
+  try {
+    // 🔒 Verifica se o navegador suporta a API moderna
+    if (!window.showSaveFilePicker) {
+      // fallback compatível
+      const str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(estadoApp));
+      const a = document.createElement('a');
+      a.setAttribute("href", str);
+      a.setAttribute("download", "plano.json");
+      a.click();
 
-                const writable = await handle.createWritable();
-                await writable.write(JSON.stringify(estadoApp, null, 2));
-                await writable.close();
+      showToast("Backup baixado (modo compatível)");
+      return;
+    }
 
-                showToast("Backup salvo com sucesso!");
-            } catch (err) {
-                console.log("Usuário cancelou ou erro:", err);
-                showToast("Backup cancelado.", true);
-            }
-        }
+    // 🧠 Abre janela para o usuário escolher onde salvar
+    const handle = await window.showSaveFilePicker({
+      suggestedName: "plano.json",
+      types: [{
+        description: "Arquivo JSON",
+        accept: { "application/json": [".json"] }
+      }]
+    });
+
+    // 💾 Cria o arquivo e escreve os dados
+    const writable = await handle.createWritable();
+    await writable.write(JSON.stringify(estadoApp, null, 2));
+    await writable.close();
+
+    // ☁️ (Opcional) sincroniza com a nuvem
+   // if (window.salvarNaNuvem) await window.salvarNaNuvem();
+
+    showToast("Backup salvo com sucesso!");
+
+  } catch (err) {
+    console.log("Erro ou cancelamento:", err);
+
+    // 🎯 Diferencia cancelamento de erro real
+    if (err.name === "AbortError") {
+      showToast("Operação cancelada.");
+    } else {
+      showToast("Erro ao salvar backup.", true);
+    }
+  }
+}
         
         function importarJSON(e) { const f = e.target.files[0]; if(!f) return; const r = new FileReader(); r.onload = function(ev) { try { aplicarEstadoApp(JSON.parse(ev.target.result)); showToast("Restaurado!"); } catch(err) { showToast("Inválido.", true); } }; r.readAsText(f); e.target.value = ''; }
         
         (async () => {
             try {
-                const { initializeApp } = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js'); const { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js'); const { getFirestore, doc, setDoc, getDoc } = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js');
-                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null; const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                const { initializeApp } = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js'); 
+                const { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js'); 
+                const { getFirestore, doc, setDoc, getDoc } = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js');
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null; 
+                const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
                 if(firebaseConfig) {
-                    const app = initializeApp(firebaseConfig); const auth = getAuth(app); const db = getFirestore(app);
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token); else await signInAnonymously(auth);
+                    const app = initializeApp(firebaseConfig); 
+                    const auth = getAuth(app); 
+                    const db = getFirestore(app);
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token); 
+                    else await signInAnonymously(auth);
                     onAuthStateChanged(auth, async (user) => {
                         const statusEl = document.getElementById('cloud-status');
                         if (user) {

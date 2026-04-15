@@ -1,4 +1,13 @@
-        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.5; padding: 2rem; }
+        html {
+            font-size: 100%;
+        }
+        
+        body { background-color: var(--bg-body); 
+            color: var(--text-main); 
+            line-height: 1.5; 
+            padding: 2rem; 
+            font-size: 1.25rem;
+        }
         .container { max-w: 1100px; margin: 0 auto; }
         .section-desc { color: var(--text-muted); margin-top: 5px; margin-bottom: 1.5rem; }
 
@@ -39,12 +48,25 @@
         .timeline-item.bloqueado .timeline-content { cursor: not-allowed; background: var(--bg-body); }
         .timeline-header { display: flex; justify-content: space-between; align-items: center; }
         .timeline-body { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-color); animation: fadeIn 0.3s ease;}
+
+        
         .timeline-item.expandido .timeline-body { display: block; }
         .timeline-item.bloqueado .timeline-body { display: none !important; }
         .btn-concluir-nivel { margin-top: 1rem; background: var(--success); color: white; border: none; padding: 0.5rem 1rem; border-radius: var(--radius-md); cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s;}
         .btn-concluir-nivel:hover { background: #16a34a; }
-        .tag-ti { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; display: inline-block; margin: 0 4px 4px 0;}
+        .tag-ti { 
+            background: #dbeafe; 
+            color: #1e40af; 
+            border: 1px solid #bfdbfe; 
+            padding: 2px 8px; 
+            border-radius: 4px; 
+            font-size: 0.9rem; 
+            font-weight: bold; 
+            display: inline-block; 
+            margin: 0 4px 4px 0;}
 
+        
+        
         /* --- CHECKLIST --- */
         .checklist-group { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); margin-bottom: 1.5rem; overflow: hidden; box-shadow: var(--shadow-sm); }
         .checklist-header { background: var(--bg-body); padding: 1rem 1.5rem; font-weight: bold; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;}
