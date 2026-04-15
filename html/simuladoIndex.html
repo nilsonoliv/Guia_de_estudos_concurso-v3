@@ -1,11 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/styleSimulado.css">
+    <title>Simulados BB - Plataforma Inteligente</title>
+    
+    <!-- 
+    ========================================================================
+    ESTRUTURA DE PASTAS RECOMENDADA PARA O PROJETO REAL:
+    
+    /
+    ├── simuladoIndex.html           (Estrutura principal e importações)
+    ├── css/
+    │   └── styleSimulado.css        (Estilos globais e variáveis)
+    ├── js/
+    │   ├── appQuestions.js           (Lógica principal de inicialização e roteamento)
+    │   ├── questoes.js      (ETAPA 2: Banco de questões)
+    │   └── simulado.js      (ETAPA 3: Lógica do simulado)
+    └── assets/              (Imagens e ícones)
+    ========================================================================
+    -->
+    <script src="/js/appQuestions.js"></script>
+    <script src="/js/questoes.js"></script>
+    <script src="/js/simulado.js"></script>
+
+ 
 </head>
 <body>
-    <main  style="background-color: blueviolet; width: 100%; height: 100vh;"></main>
+
+    <!-- CABEÇALHO DO SISTEMA -->
+    <header>
+        <h1>Simulados BB Inteligente</h1>
+        <nav>
+            <!-- Futuros links de navegação entrarão aqui -->
+            <span>Área do Aluno</span>
+        </nav>
+    </header>
+
+    <!-- ÁREA PRINCIPAL ONDE AS VIEWS SERÃO RENDERIZADAS DINAMICAMENTE -->
+    <main id="app-container">
+        <!-- O conteúdo inicial (Dashboard) é renderizado aqui pelo JavaScript -->
+    </main>
+
+    <!-- RODAPÉ DO SISTEMA -->
+    <footer>
+        <p>&copy; 2026 Plataforma de Simulados Inteligentes. Foco na aprovação.</p>
+    </footer>
+
+    
 </body>
 </html>
