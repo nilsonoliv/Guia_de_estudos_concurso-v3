@@ -8,7 +8,7 @@
             // Elementos do DOM cacheados para performance
             let appContainer;
 
-            /**
+            /**AA
              * Função para inicializar a aplicação
              */
             function init() {
