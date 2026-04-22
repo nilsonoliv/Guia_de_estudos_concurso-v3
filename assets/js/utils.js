@@ -4,10 +4,11 @@
  * Futuro: Extrair para `utils.js`.
  * ============================================================================ */
 
+
 /**
  * Exibe um toast (notificação flutuante) para o usuário.
  */
-function showToast(msg, err = false) { 
+export function showToast(msg, err = false) { 
     let c = document.getElementById('toast-container'); 
     if(!c) { 
         c = document.createElement('div'); 

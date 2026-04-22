@@ -1,7 +1,11 @@
 //Funções de renderização (renderFases, renderCharts)
 //Cole as funções como renderRoadmap(), abrirModal(), etc.
 
-//Antes de fechar </body>: <script src="./js/ui.js"></script>
+//imports
+import { estadoApp, dbRoadmap, dbEscada, dbChecklist } from './dataState.js';
+import { showToast } from './utils.js';
+
+
 
 /* ============================================================================
  * 3. MÓDULO: UI & DOM (Lógica de Negócio)
@@ -12,7 +16,7 @@
 /**
  * Atualiza a data de início e recalcula o contador.
  */
-function atualizarDataInicio(e) { 
+export function atualizarDataInicio(e) { 
     estadoApp.dataInicio = e.target.value; 
     renderCountdown(); 
     if(window.salvarNaNuvem) window.salvarNaNuvem(); 
@@ -21,7 +25,7 @@ function atualizarDataInicio(e) {
 /**
  * Renderiza a contagem regressiva para a data da prova.
  */
-function renderCountdown() { 
+export function renderCountdown() { 
     if (estadoApp.dataInicio) {
         document.getElementById('input-data-inicio').value = estadoApp.dataInicio; 
     }
@@ -44,7 +48,7 @@ function renderCountdown() {
 /**
  * Renderiza o Roadmap e gerencia as fases.
  */
-function renderRoadmap() {
+export function renderRoadmap() {
     const contA = document.getElementById('container-fases-ativas');
     const contC = document.getElementById('container-fases-concluidas');
     if(!contA) return;
@@ -88,21 +92,21 @@ function renderRoadmap() {
     lucide.createIcons();
 }
 
-function concluirFase(id) { 
+export function concluirFase(id) { 
     estadoApp.fasesConcluidas.push(id); 
     renderRoadmap(); 
     showToast("Fase superada!"); 
     if(window.salvarNaNuvem) window.salvarNaNuvem(); 
 }
 
-function desfazerFase(id) { 
+export function desfazerFase(id) { 
     estadoApp.fasesConcluidas = estadoApp.fasesConcluidas.filter(fid => fid !== id); 
     renderRoadmap(); 
     showToast("Ação desfeita."); 
     if(window.salvarNaNuvem) window.salvarNaNuvem(); 
 }
 
-function abrirModal(id) {
+export function abrirModal(id) {
     const f = dbRoadmap.find(x => x.id === id);
     document.getElementById('modal-fase-titulo').textContent = f.titulo; 
     document.getElementById('modal-fase-badge').textContent = f.meses; 
@@ -116,22 +120,22 @@ function abrirModal(id) {
     document.body.style.overflow = 'hidden';
 }
 
-function fecharModal() { 
+export function fecharModal() { 
     const m = document.getElementById('modal-roadmap'); 
     m.classList.remove('active'); 
     setTimeout(() => { m.style.display = 'none'; document.body.style.overflow = ''; }, 300); 
 }
 
-function fecharModalFora(e) { 
+export function fecharModalFora(e) { 
     if(e.target.id === 'modal-roadmap') fecharModal(); 
 }
 
 /**
  * Escada de Conhecimento e Filtros.
  */
-let escadaExpandida = 1; // Variável de controle visual
+export let escadaExpandida = 1; // Variável de controle visual
 
-function filtrarEscada(areaID) {
+export function filtrarEscada(areaID) {
     const cards = document.querySelectorAll('.lp, .ti, .mt');
     cards.forEach(card => {
         if (areaID === 'all') {
@@ -152,7 +156,7 @@ function filtrarEscada(areaID) {
     });
 }
 
-function manterEscada() {
+export function manterEscada() {
     const cards = document.querySelectorAll('.lp, .ti, .mt');
     cards.forEach(card => {
         if (estadoApp.filtroEscada === 'all') {
@@ -172,7 +176,7 @@ function manterEscada() {
     });
 }
 
-function renderEscada() { 
+export function renderEscada() { 
     const container = document.getElementById('container-escada'); 
     if(!container) return; 
     
@@ -213,14 +217,14 @@ function renderEscada() {
     lucide.createIcons();  
 }  
 
-function toggleEscada(id) { 
+export function toggleEscada(id) { 
     if((estadoApp.escada.find(n=>n.id===id)||{}).status!=='bloqueado'){ 
         escadaExpandida = escadaExpandida===id?null:id; 
         renderEscada(); 
     } 
 } 
 
-function concluirEscada(e, id) { 
+export function concluirEscada(e, id) { 
     e.stopPropagation(); 
     const c = estadoApp.escada.find(n=>n.id===id); 
     if(c) c.status='concluido'; 
@@ -237,7 +241,7 @@ function concluirEscada(e, id) {
 /**
  * Checklist Integrado
  */
-function renderChecklist() {
+export function renderChecklist() {
     const container = document.getElementById('container-checklist'); 
     if(!container) return;
     
@@ -263,7 +267,7 @@ function renderChecklist() {
     lucide.createIcons();
 }
 
-function toggleChecklist(id) {
+export function toggleChecklist(id) {
     if(estadoApp.checklist.includes(id)) {
         estadoApp.checklist = estadoApp.checklist.filter(i=>i!==id);
     } else { 
@@ -278,7 +282,7 @@ function toggleChecklist(id) {
 /**
  * Streak (Ofensiva diária)
  */
-function renderStreak() {
+export function renderStreak() {
     document.getElementById('ui-streak-count').querySelector('span').innerText = estadoApp.streak.count;
     const icon = document.getElementById('ui-streak-icon');
     if(estadoApp.streak.count > 0) { 
@@ -290,7 +294,7 @@ function renderStreak() {
     }
 }
 
-function marcarMetaDiaria() { 
+export function marcarMetaDiaria() { 
     const hj = new Date().toDateString();
     console.log( "const hj é igual a: " + hj);
     
@@ -327,7 +331,7 @@ function marcarMetaDiaria() {
 /**
  * SWOT (Forças, Fraquezas, Táticas)
  */
-function renderSwot() {
+export function renderSwot() {
     const container = document.getElementById('container-swot'); 
     if(!container) return;
     
@@ -356,7 +360,7 @@ function renderSwot() {
     lucide.createIcons();
 }
 
-function adicionarSwot(t) { 
+export function adicionarSwot(t) { 
     const v = document.getElementById(`input-swot-${t}`).value.trim(); 
     if(v) { 
         estadoApp.swot[t].push(v); 
@@ -365,7 +369,7 @@ function adicionarSwot(t) {
     } 
 }
 
-function removerSwot(t, idx) { 
+export function removerSwot(t, idx) { 
     estadoApp.swot[t].splice(idx, 1); 
     renderSwot(); 
     if(window.salvarNaNuvem) window.salvarNaNuvem(); 
@@ -374,7 +378,7 @@ function removerSwot(t, idx) {
 /**
  * Configuração e Navegação de Tabs
  */
-function configurarTabs() {
+export function configurarTabs() {
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.tab-btn, .tab-pane').forEach(el => el.classList.remove('active'));

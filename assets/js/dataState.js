@@ -5,12 +5,14 @@
  * Futuro: Extrair para `state.js` e `data.js`.
  * ============================================================================ */
 
+//imports para modulos
+import { showToast } from './utils.js';
 /**
  * Objeto global mutável que guarda o progresso do usuário.
  * Qualquer alteração na interface deve primeiro alterar este estado, 
  * e em seguida chamar a função de renderização correspondente.
  */
-let estadoApp = {
+export let estadoApp = {
     dataInicio: '', 
     dataProva: '2028-04-07', 
     fasesConcluidas: [],
@@ -39,7 +41,7 @@ let estadoApp = {
 };
 
 // Bancos estáticos
-const dbRoadmap = [
+export  const dbRoadmap = [
     { id: 1, titulo: "F1: Alfabetização e Setup", meses: "Meses 1-3", color: "green", objetivo: "Lógica e Preparação do Ambiente. Entender a lógica por trás da computação.", semana: [{dia: "Seg", mat: "TI (Lógica) + Inglês"},{dia: "Ter", mat: "Português"}, {dia: "Qua", mat: "TI (Lógica)"}, {dia: "Qui", mat: "Português"}, {dia: "Sex", mat: "TI (Lógica)"}], metas: ["Instalar e configurar VS Code e Git/GitHub.", "Resolver 150 questões de Lógica (Teste de Mesa).", "Iniciar Deck de Anki com classes de palavras.", "Checkpoint: Acertar >70% em lógica."] },
     { id: 2, titulo: "F2: Estruturas e Persistência", meses: "Meses 4-6", color: "indigo", objetivo: "Onde os dados moram. Dominar a organização da informação.", semana: [{dia: "Seg", mat: "TI (Dados/SQL) + Inglê"},{dia: "Ter", mat: "Português"}, {dia: "Qua", mat: "TI (Dados/SQL)"}, {dia: "Qui", mat: "Português"}, {dia: "Sex", mat: "TI (Dados/SQL)"}], metas: ["Criar DB local e realizar CRUD.", "Dominar 1ª, 2ª e 3ª Formas Normais.", "Mapear Pilhas/Filas com exemplos bancários.", "Alimentar Anki com regras de Crase e Pontuação."] },
     { id: 3, titulo: "F3: Codificação Core e Finanças", meses: "Meses 7-9", color: "purple", objetivo: "Java e Juros. Codificação orientada à banca e valor do dinheiro.", semana: [{dia: "Seg", mat: "TI (Java)"},{dia: "Ter", mat: "Mat. Financeira"}, {dia: "Qua", mat: "TI (Java)"}, {dia: "Qui", mat: "Mat. Financeira"}, {dia: "Sex", mat: "TI (Dados/SQL)"}], metas: ["Implementar sistema Conta Corrente em Java (POO).", "Resolver 100 questões de Juros Compostos.", "Dominar SQL Queries com 3+ JOINS.", "Checkpoint: Simulado Java Core + SQL."] },
@@ -50,7 +52,7 @@ const dbRoadmap = [
     { id: 8, titulo: "F8: Simulação Total e Véspera", meses: "Meses 22-24", color: "green", objetivo: "Ajuste Fino e Psicológico. Memorização de curto prazo.", semana: [{dia: "Seg", mat: "Revisão Ativa"}, {dia: "Qua", mat: "Revisão Ativa"}, {dia: "Qui", mat: "Revisão Ativa"}, {dia: "Sex", mat: "Simulado Geral"}], goals: ["10 simulados completos com gabarito.", "Revisar Leitura Suja (Prazos/Multas).", "Média de acertos em TI > 85%.", "Simular dia da prova (tempo/alimentação)."] }                
 ];
 
-const dbEscada = [
+export  const dbEscada = [
     { id: 1, tipo: "ti", titulo: "Nível 1: Fundamentos e Pensamento Computacional", desc: "Entender como a máquina funciona e como o profissional se posiciona.", topicos: ["Mindset e Comportamento: Aprender a aprender (Life long learning) e inteligência emocional", "Arquitetura de Computadores: CPU, memória, binário, complemento a dois, ponto flutuante e instruções.", "Sistemas Operacionais: Funções, processos (escalonamento, sincronização), gestão de memória (virtual, swapping) e sistemas de arquivos.", "Laboratório: Familiarizar-se com Windows 10 e Linux (SUSE SLES). Ter uma noção teórica de IBM z/OS (Mainframe)."] },
     { id: 2, tipo: "ti", titulo: "Nível 2: Lógica, Algoritmos e Estruturas", desc: "A base lógica para a construção de qualquer software.", topicos: ["Algoritmos e Estrutura de Dados: Busca sequencial e binária.", "Ordenação: Bubble sort, Selection, Insertion.", "Estruturas Lineares: Listas encadeadas, Pilhas e Filas.", "Estruturas Não-Lineares: Noções de árvore binária."] },
     { id: 3, tipo: "ti", titulo: "Nível 3: Bancos de Dados Relacionais", desc: "O domínio da persistência de dados e da linguagem SQL.", topicos: ["Conceitos de SGBD: Sistemas gerenciadores de bancos de dados.", "Modelagem Conceitual: Abordagem entidade-relacionamento.", "Modelo Relacional: Conceitos básicos e Normalização.","Linguagem SQL: Essencial para a manipulação e consulta de dados."] },
@@ -75,7 +77,7 @@ const dbEscada = [
     { id: 22, tipo: "lp", titulo: "🔁 Fase VI — INGLÊS PARA PROVA (FOCO EM LEITURA)", desc: "Não é fluência — é estratégia de prova.", topicos: ["Interpretação de textos em inglês", "Estratégias de scanning (busca de informação)", "Estratégias de skimming (leitura rápida)", "Falsos cognatos"] }            
 ];
 
-const dbChecklist = [
+export const dbChecklist = [
     { areaNome: "TI - Desenvolvimento e Bancos", areaID: 'ti', itens: [
         { id: 'c1', text: 'Bancos de Dados - SQL: Select, Insert, Update, Delete, Joins, Group By, Subqueries', priority: 'quente' },
         { id: 'c2', text: 'Bancos de Dados: Modelagem Relacional e Normalização (1FN, 2FN, 3FN)', priority: 'quente' },

@@ -4,7 +4,13 @@
  * Futuro: Extrair para `sync.js` (ou `firebase.js` dependendo da config).
  * ============================================================================ */
 
-function aplicarEstadoApp(d) { 
+//IMPORTS
+import { estadoApp, dbRoadmap, dbEscada, dbChecklist } from './dataState.js';
+/*não importe as variaeis pq eu acho que nap precisa*/import { renderProgressoGamificado, renderCharts, inserirSimulado } from './charts.js';
+import { showToast } from './utils.js';
+
+
+export function aplicarEstadoApp(d) { 
     estadoApp = { ...estadoApp, ...d, fasesConcluidas: d.fasesConcluidas || [], dataInicio: d.dataInicio || '' }; 
     renderCountdown(); 
     renderRoadmap(); 
@@ -16,7 +22,7 @@ function aplicarEstadoApp(d) {
     if(document.getElementById('tab-analytics').classList.contains('active')) renderCharts(); 
 }
 
-async function exportarJSON() {
+export async function exportarJSON() {
     try {
         if (!window.showSaveFilePicker) {
             // fallback compatível
@@ -50,7 +56,7 @@ async function exportarJSON() {
     }
 }
         
-function importarJSON(e) { 
+export function importarJSON(e) { 
     const f = e.target.files[0]; 
     if(!f) return; 
     const r = new FileReader(); 
@@ -67,7 +73,7 @@ function importarJSON(e) {
 }
 
 // Configuração assíncrona e importação do Firebase
-(async () => {
+export const initFirebase = (async () => {
     try {
         const { initializeApp } = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js'); 
         const { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js'); 
@@ -110,7 +116,7 @@ function importarJSON(e) {
 })();
 
 // Backup via LocalStorage (Fallback automático caso Firebase falhe)
-(() => {
+  (() => {
     try {
         const backup = localStorage.getItem('planoEstudoBackup');
         if(backup) aplicarEstadoApp(JSON.parse(backup));

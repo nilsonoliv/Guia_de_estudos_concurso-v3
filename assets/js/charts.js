@@ -4,10 +4,15 @@
  * Futuro: Extrair para `charts.js`.
  * ============================================================================ */
 
-let chartEvolucaoInstance = null;
-let progressoChartInstance = null; 
+//IMPORTS 
+import { estadoApp, dbRoadmap, dbEscada, dbChecklist } from './dataState.js';
+import { showToast } from './utils.js';
 
-function renderProgressoGamificado() {
+
+export let chartEvolucaoInstance = null;
+export let progressoChartInstance = null; 
+
+export function renderProgressoGamificado() {
     let tTi=0, tBasico=0, tDigital=0, cTi=0, cBasico=0, cDigital=0;
     
     dbChecklist.forEach(g => {
@@ -64,7 +69,7 @@ function renderProgressoGamificado() {
     }
 }
 
-function renderCharts() {
+export function renderCharts() {
     const ctx = document.getElementById('chartEvolucao'); 
     if(!ctx) return;
     
@@ -90,7 +95,7 @@ function renderCharts() {
     });
 }
 
-function inserirSimulado() { 
+export function inserirSimulado() { 
     const r = document.getElementById('sim-data').value;
     const n = parseFloat(document.getElementById('sim-nota').value); 
     if(r && !isNaN(n)) { 
