@@ -5,21 +5,29 @@
  * ============================================================================ */
 
 //IMPORTS
-import { estadoApp, dbRoadmap, dbEscada, dbChecklist } from './dataState.js';
-/*não importe as variaeis pq eu acho que nap precisa*/import { renderProgressoGamificado, renderCharts, inserirSimulado } from './charts.js';
+import { estadoApp } from './dataState.js';
 import { showToast } from './utils.js';
-
+import * as UI from './ui.js';
+import * as Charts from './charts.js';
 
 export function aplicarEstadoApp(d) { 
-    estadoApp = { ...estadoApp, ...d, fasesConcluidas: d.fasesConcluidas || [], dataInicio: d.dataInicio || '' }; 
-    renderCountdown(); 
-    renderRoadmap(); 
-    renderEscada(); 
-    renderChecklist(); 
-    renderProgressoGamificado(); 
-    renderStreak(); 
-    renderSwot(); 
-    if(document.getElementById('tab-analytics').classList.contains('active')) renderCharts(); 
+    // Atualiza o conteúdo do objeto sem mudar a referência (Boas práticas ES6)
+    Object.assign(estadoApp, d); 
+    
+    // Redesenha a interface completa com os novos dados importados
+    UI.renderCountdown(); 
+    UI.renderRoadmap(); 
+    UI.renderEscada(); 
+    UI.renderChecklist(); 
+    UI.renderStreak(); 
+    UI.renderSwot(); 
+    Charts.renderProgressoGamificado(); 
+    
+    // Se estiver na aba de analytics, redesenha o gráfico de linha
+    const tabAnalytics = document.getElementById('tab-analytics');
+    if(tabAnalytics && tabAnalytics.classList.contains('active')) {
+        Charts.renderCharts();
+    }
 }
 
 export async function exportarJSON() {

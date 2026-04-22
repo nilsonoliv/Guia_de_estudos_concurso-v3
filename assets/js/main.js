@@ -18,35 +18,49 @@
 import * as UI from './ui.js';
 import * as Charts from './charts.js';
 import * as Sync from './sync.js';
-import { estadoApp, dbRoadmap, dbEscada, dbChecklist } from './dataState.js';
-import { atualizarDataInicio, renderCountdown, renderRoadmap, concluirFase, desfazerFase, abrirModal, fecharModal, fecharModalFora, escadaExpandida, filtrarEscada, manterEscada, renderEscada, toggleEscada, concluirEscada, renderChecklist, toggleChecklist, renderStreak, marcarMetaDiaria, renderSwot, adicionarSwot, removerSwot, configurarTabs } from './ui.js';
-/*não importe as variaeis pq eu acho que nap precisa*/import { renderProgressoGamificado, renderCharts, inserirSimulado } from './charts.js';
-import { aplicarEstadoApp, exportarJSON, importarJSON, } from './sync.js';
-import { showToast } from './utils.js';
 
-
-// 1. Resolver o problema do HTML (Tornar as funções globais)
+// 1. MAPEAMENTO PARA ESCOPO GLOBAL (Resolve os 'onclick' do HTML)
+// UI e Eventos
 window.marcarMetaDiaria = UI.marcarMetaDiaria;
 window.atualizarDataInicio = UI.atualizarDataInicio;
 window.filtrarEscada = UI.filtrarEscada;
+window.concluirFase = UI.concluirFase;
+window.desfazerFase = UI.desfazerFase;
+window.abrirModal = UI.abrirModal;
+window.fecharModal = UI.fecharModal;
+window.fecharModalFora = UI.fecharModalFora;
+window.toggleEscada = UI.toggleEscada;
+window.concluirEscada = UI.concluirEscada;
+window.toggleChecklist = UI.toggleChecklist;
+window.adicionarSwot = UI.adicionarSwot;
+window.removerSwot = UI.removerSwot;
+
+// Gráficos e Dados
 window.inserirSimulado = Charts.inserirSimulado;
+
+// Backup e Sincronização
 window.exportarJSON = Sync.exportarJSON;
 window.importarJSON = Sync.importarJSON;
-// ... faça isso para todas as funções que estão nos 'onclick' do HTML
 
-// 2. Inicialização
+// 2. INICIALIZAÇÃO ÚNICA DA APLICAÇÃO
 document.addEventListener('DOMContentLoaded', () => { 
+    console.log("🚀 Sistema Modular Iniciado");
+    
+    // Renderiza todos os componentes iniciais
     UI.renderCountdown(); 
     UI.renderRoadmap(); 
     UI.renderEscada(); 
     UI.renderChecklist(); 
-    Charts.renderProgressoGamificado(); 
     UI.renderStreak(); 
     UI.renderSwot(); 
     UI.configurarTabs(); 
+    
+    // Inicializa gráficos
+    Charts.renderProgressoGamificado(); 
+    
+    // Ativa ícones do Lucide
     lucide.createIcons(); 
 });
-
 
 /* ============================================================================
  * 6. MÓDULO: INIT (Inicialização)
