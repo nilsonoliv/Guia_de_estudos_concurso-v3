@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     UI.renderSwot(); 
     UI.configurarTabs(); 
     
+    
     // Inicializa gráficos
     Charts.renderProgressoGamificado(); 
     
@@ -62,20 +63,5 @@ document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons(); 
 });
 
-/* ============================================================================
- * 6. MÓDULO: INIT (Inicialização)
- * Responsabilidade: Iniciar a renderização principal após o carregamento do DOM.
- * Futuro: Extrair para `app.js` ou manter em `main.js`.
- * ============================================================================ */
 
-document.addEventListener('DOMContentLoaded', () => { 
-    renderCountdown(); 
-    renderRoadmap(); 
-    renderEscada(); 
-    renderChecklist(); 
-    renderProgressoGamificado(); 
-    renderStreak(); 
-    renderSwot(); 
-    configurarTabs(); 
-    lucide.createIcons(); 
-});
+

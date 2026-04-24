@@ -4,6 +4,7 @@
 //imports
 import { estadoApp, dbRoadmap, dbEscada, dbChecklist } from './dataState.js';
 import { showToast } from './utils.js';
+import { renderProgressoGamificado, renderCharts } from './charts.js';
 
 
 
