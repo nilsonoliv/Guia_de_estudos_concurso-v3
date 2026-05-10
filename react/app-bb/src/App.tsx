@@ -1,41 +1,122 @@
-import React, { useState } from 'react'
-import { Award, Flame, Timer, Calendar, TrendingUp, Target, CheckSquare, PieChart, Cloud } from 'lucide-react';
-
-
-/**
- * ============================================================================
- * PASSO 1 DA MIGRAÇÃO: APP SHELL (Layout Principal)
- * ============================================================================
- * Este ficheiro representa como o teu `index.html` e a lógica de navegação do `main.js`
- * se transformam num componente React.
- * * NOTA DE ARQUITETURA LOCAL: Na tua máquina, o Header, a Navegação e o Conteúdo 
- * seriam ficheiros separados dentro da pasta `src/components`. Aqui consolidamos
- * num ficheiro para poderes visualizar e interagir imediatamente.
- */
-
-// --- Componente de Cabeçalho (Header) ---
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from './assets/vite.svg'
+import heroImg from './assets/hero.png'
+import './App.css'
 
 function App() {
-  
-  
-    const Header = () => {
-      return (
-        <header className="bg-gradient-to-br from-blue-900 to-indigo-700 rounded-2xl p-8 text-white shadow-lg flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-          <div className="flex flex-col items-center md:items-start">
-            <h1 className="flex items-center gap-2 text-2xl font-bold"><Award className="text-yellow-400" size={32} /> Projeto Aprovação TI </h1>
-            <p className="text-blue-200 mt-2 text-sm">Centro de Comando Estratégico | Foco: Banco do Brasil</p>
-          </div>
+  const [count, setCount] = useState(0)
 
-          <div className="flex gap-4 items-stretch"> 
-            {/* Painel de Ofensiva (Streak) */}
-            <div className="bg-white/10 p-4 rounded-xl border border-white/20 backdrop-blur-sm flex flex-col justify-center items-center cursor-pointer hover:bg-white/20 transition-all hover:-translate-y-1">
-            
-            </div>  
-          </div>  
-        </header>
-      )
-    }  
-  
+  return (
+    <>
+      <section id="center">
+        <div className="hero">
+          <img src={heroImg} className="base" width="170" height="179" alt="" />
+          <img src={reactLogo} className="framework" alt="React logo" />
+          <img src={viteLogo} className="vite" alt="Vite logo" />
+        </div>
+        <div>
+          <h1>Get started</h1>
+          <p>
+            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+          </p>
+        </div>
+        <button
+          type="button"
+          className="counter"
+          onClick={() => setCount((count) => count + 1)}
+        >
+          Count is {count}
+        </button>
+      </section>
+
+      <div className="ticks"></div>
+
+      <section id="next-steps">
+        <div id="docs">
+          <svg className="icon" role="presentation" aria-hidden="true">
+            <use href="/icons.svg#documentation-icon"></use>
+          </svg>
+          <h2>Documentation</h2>
+          <p>Your questions, answered</p>
+          <ul>
+            <li>
+              <a href="https://vite.dev/" target="_blank">
+                <img className="logo" src={viteLogo} alt="" />
+                Explore Vite
+              </a>
+            </li>
+            <li>
+              <a href="https://react.dev/" target="_blank">
+                <img className="button-icon" src={reactLogo} alt="" />
+                Learn more
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div id="social">
+          <svg className="icon" role="presentation" aria-hidden="true">
+            <use href="/icons.svg#social-icon"></use>
+          </svg>
+          <h2>Connect with us</h2>
+          <p>Join the Vite community</p>
+          <ul>
+            <li>
+              <a href="https://github.com/vitejs/vite" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#github-icon"></use>
+                </svg>
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a href="https://chat.vite.dev/" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#discord-icon"></use>
+                </svg>
+                Discord
+              </a>
+            </li>
+            <li>
+              <a href="https://x.com/vite_js" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#x-icon"></use>
+                </svg>
+                X.com
+              </a>
+            </li>
+            <li>
+              <a href="https://bsky.app/profile/vite.dev" target="_blank">
+                <svg
+                  className="button-icon"
+                  role="presentation"
+                  aria-hidden="true"
+                >
+                  <use href="/icons.svg#bluesky-icon"></use>
+                </svg>
+                Bluesky
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <div className="ticks"></div>
+      <section id="spacer"></section>
+    </>
+  )
 }
 
 export default App
