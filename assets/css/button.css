@@ -28,23 +28,25 @@
 
 .a-analytics {
     background-color: #f59e0b;
-    color: #815304;
+    color: #815d1e;
     text-decoration: none;
-    padding: 20px 40px;
-    border-radius: 5px;
-    font-size: 20px;
+    padding: 10px 40px;
+    border-radius: 25px;
+    font-size: 18px;
     transition: background-color 0.3s ease;
-    border: 1px solid #815304;
+    /*border: 1px solid #815304;*/
     font-weight: bold;
+    /*colocar um gradiente de brilho no botão*/
+    background-image: radial-gradient(circle at 0% 50%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 100%);
 
     
 }
 .a-analytics:hover {
     background-color: #815304;
-    color: #f59e0b;
+    color: #f5dab1;
     font-weight:900;
     /*efeito de brilho*/
-    box-shadow: 0 0 10px #f59e0b;
+    box-shadow: 0 0 10px #f7d7a0;
     opacity: 1;
-
+      
 }
