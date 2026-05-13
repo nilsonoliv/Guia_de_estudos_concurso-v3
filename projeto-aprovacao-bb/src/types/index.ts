@@ -23,7 +23,7 @@ export interface FaseRoadmap {
 }
 
 // --- ESCADA DE CONHECIMENTO ---
-export type TipoEscada = 'ti' | 'mt' | 'lp';
+export type TipoEscada = 'ti' | 'mt' | 'lp' | 'pt';
 
 export interface NivelEscada {
   id: number;
